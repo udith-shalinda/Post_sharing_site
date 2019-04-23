@@ -4,11 +4,11 @@
     <span fxFlex></span>
 </div>
 
-<form >
+<form [formGroup]="todolist">
         <mat-form-field class="formfield">
-            <input matInput placeholder="Favorite food" >
+            <input matInput placeholder="Favorite food" formControlName="title">
         </mat-form-field>
         <mat-form-field class="formfield">
-            <input matInput placeholder="sfsfs food" >
+            <input matInput placeholder="sfsfs food" formControlName="comment">
         </mat-form-field>
 </form>

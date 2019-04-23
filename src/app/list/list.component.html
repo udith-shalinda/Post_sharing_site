@@ -1,3 +1,13 @@
-<p>
-  list works!
-</p>
+<div id="content">
+  <mat-accordion>
+      <mat-expansion-panel *ngFor="let data of list">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{data.title}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+            {{data.comment}}
+        
+      </mat-expansion-panel>
+    </mat-accordion>
+</div>
