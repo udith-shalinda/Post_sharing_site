@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-todoinput',
@@ -8,8 +9,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class TodoinputComponent implements OnInit {
   todolist :FormGroup;
+  listItem :{title:string,comment:string};
 
-  constructor() { }
+  constructor(private dataservice : DataService) { }
 
   ngOnInit() {
     this.todolist = new FormGroup({
@@ -17,5 +19,7 @@ export class TodoinputComponent implements OnInit {
       'comment':new FormControl()
     })
   }
-
+  buttonClicked(){
+    this.dataservice.pushdata(this.todolist.value.title,this.todolist.value.comment);
+  }
 }
