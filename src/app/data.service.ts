@@ -1,9 +1,9 @@
 export class DataService{
     list=[{
-        title:'one',
-        comment:'this is first'
+        title:'test one',
+        comment:'this is first test'
     },{
-        title:"two",
-        comment:'this is second'
+        title:"test two",
+        comment:'this is second test'
     }]
 }

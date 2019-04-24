@@ -9,13 +9,7 @@ import { DataService } from '../data.service';
 export class ListComponent implements OnInit {
   panelOpenState = false;
   listItem :{title:string,comment:string}[]
-  list=[{
-    title:'one',
-    comment:'this is first'
-},{
-    title:"two",
-    comment:'this is second'
-}]
+  
   constructor(private dataservice:DataService) { }
 
   ngOnInit() {
