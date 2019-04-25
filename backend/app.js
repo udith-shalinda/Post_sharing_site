@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const app = express();
 //ODjmkgYPiqNhMgTk
 
-mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/test?retryWrites=true")
+mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/node-angular?retryWrites=true")
 .then(()=>{
     console.log("Database connected successfully");
 })
@@ -32,25 +32,21 @@ app.post('/home',(req,res,next)=>{
 
     });
     // const list = req.body;
-    console.log(list);
+    // console.log(list);
+    list.save();
     res.status(201).json({
         message:'element added successfully'
     });
 });
 
 app.get('/home',(req,res,next)=>{
-    const list=[{
-        id:'sfsfsfsf',
-        title:'test one',
-        comment:'this is first test'
-    },{
-        id:'ssssssssssss',
-        title:"test two",
-        comment:'this is second test'
-    }];
-    res.status(200).json({
-        message:'The list is fetched',
-        List:list
+    List.find()
+    .then((document)=>{
+        console.log(document);
+        res.status(200).json({
+            message:'The list is fetched',
+            List:document
+        });
     });
 });
 
