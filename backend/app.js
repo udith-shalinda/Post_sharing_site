@@ -1,7 +1,22 @@
 const express = require('express');
 const List = require('./modles/list');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 
 const app = express();
+//ODjmkgYPiqNhMgTk
+
+mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/test?retryWrites=true")
+.then(()=>{
+    console.log("Database connected successfully");
+})
+.catch(()=>{
+    console.log("Connection failed");
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.use((req,res,next)=>{
     res.setHeader("Access-control-Allow-Origin","*");
@@ -11,13 +26,19 @@ app.use((req,res,next)=>{
 });
 
 app.post('/home',(req,res,next)=>{
-    // console.log(req.body.title);
+    const list = new List({
+        title:req.body.title,
+        comment:req.body.comment
+
+    });
+    // const list = req.body;
+    console.log(list);
     res.status(201).json({
         message:'element added successfully'
     });
 });
 
-app.use('/home',(req,res,next)=>{
+app.get('/home',(req,res,next)=>{
     const list=[{
         id:'sfsfsfsf',
         title:'test one',
