@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { List } from '../list.modle';
+import { DataService } from '../todoinput/data.service';
+import {  Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -8,12 +10,19 @@ import { DataService } from '../data.service';
 })
 export class ListComponent implements OnInit {
   panelOpenState = false;
-  listItem :{title:string,comment:string}[]
+  listItem :List[];
+  listSub:Subscription;
   
   constructor(private dataservice:DataService) { }
 
   ngOnInit() {
-    this.listItem = this.dataservice.list;
+    this.dataservice.getdata();
+    this.listSub = this.dataservice.getListUpdateListener().subscribe((list:List[])=>{
+      this.listItem= list;
+    });
+  }
+  ngOnDestroy(){
+    this.listSub.unsubscribe();
   }
 
 }

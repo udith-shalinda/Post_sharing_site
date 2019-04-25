@@ -6,10 +6,11 @@
 
 <form [formGroup]="todolist" (ngSubmit)="buttonClicked()">
         <mat-form-field class="formfield">
-            <input matInput placeholder="Favorite food" formControlName="title">
+            <input matInput placeholder="Enter the title" formControlName="title">
         </mat-form-field>
         <mat-form-field class="formfield">
-            <input matInput placeholder="sfsfs food" formControlName="comment">
+            <input matInput placeholder="Enter the comment" formControlName="comment">
         </mat-form-field>
         <button type="submit" mat-button>Submit</button>
 </form>
+

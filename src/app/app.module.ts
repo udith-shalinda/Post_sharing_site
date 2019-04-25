@@ -9,7 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DataService } from './data.service';
+
+import { HttpClientModule } from '@angular/common/http';
+import { DataService } from './todoinput/data.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { DataService } from './data.service';
     MatFormFieldModule,
     FlexLayoutModule,
     MatExpansionModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
