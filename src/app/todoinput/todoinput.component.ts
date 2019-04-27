@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from './data.service';
 
 
@@ -16,11 +16,12 @@ export class TodoinputComponent implements OnInit {
 
   ngOnInit() {
     this.todolist = new FormGroup({
-      'title':new FormControl(),
+      'title':new FormControl(null,[Validators.required]),
       'comment':new FormControl()
     })
   }
   buttonClicked(){   
     this.dataservice.pushdata(this.todolist.value.title,this.todolist.value.comment);
+    // this.todolist.reset();
   }
 }

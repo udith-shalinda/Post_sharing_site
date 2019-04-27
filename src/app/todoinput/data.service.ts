@@ -19,7 +19,7 @@ export class DataService{
              this.list=postData.List;
              this.listUpdated.next([...this.list]);
          });
-        //  return this.list;
+        
     }
     getListUpdateListener(){
         return this.listUpdated.asObservable();
