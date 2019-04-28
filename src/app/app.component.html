@@ -1,4 +1,11 @@
-<app-todoinput></app-todoinput>
-<app-list></app-list>
+<mat-toolbar color="primary">
+    <p>TO DO List</p>
+    <span fxFlex></span>
+    <button mat-button routerLink="/newPost" *ngIf="!newpostactive" (click)="newpostactive=true">New Post</button>
+    <button mat-button *ngIf="newpostactive" routerLink="/" (click)="newpostactive=false">Posts</button>
+</mat-toolbar>
+
+<!-- <app-todoinput></app-todoinput>
+<app-list></app-list> -->
 
 <router-outlet></router-outlet>

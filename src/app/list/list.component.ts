@@ -10,19 +10,25 @@ import {  Subscription } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   panelOpenState = false;
-  listItem :List[];
+  listItem :List[] = [];
   listSub:Subscription;
+  isLoading = false;
   
   constructor(private dataservice:DataService) { }
 
   ngOnInit() {
     this.dataservice.getdata();
+    this.isLoading = true;
     this.listSub = this.dataservice.getListUpdateListener().subscribe((list:List[])=>{
       this.listItem= list;
+      this.isLoading = false;
     });
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();
+  }
+  deletePost(id:string){
+    this.dataservice.deleteData(id);
   }
 
 }

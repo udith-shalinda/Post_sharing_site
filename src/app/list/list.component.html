@@ -1,5 +1,12 @@
 <div id="content">
-  <mat-accordion>
+    <div>
+        <span fxFlex></span>
+        <h1 >All Posts</h1>
+        <span fxFlex></span>
+    </div>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-accordion *ngIf="!isLoading">
       <mat-expansion-panel *ngFor="let data of listItem">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -7,7 +14,12 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
             {{data.comment}}
-        
+            <mat-action-row>
+              <button mat-button color="primary" [routerLink]="['/edit',data.id]">Edit</button>
+              <button mat-button color="warn" (click)="deletePost(data.id)">Delete</button>
+
+            </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
+    <p *ngIf="listItem.length==0">No post yet</p>
 </div>
