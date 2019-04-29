@@ -8,9 +8,18 @@
         <mat-form-field class="formfield">
             <input matInput placeholder="Enter the title" formControlName="title">
         </mat-form-field>
+        <div>
+            <button mat-stroked-button class="formfield" (click)="filePicker.click()">Add Image</button>
+            <input type="file" #filePicker id="filePickerId" (change)="imagePicked($event)">
+        </div>
+        <div id="imagePreview" *ngIf="imagepre !== '' && imagepre" class="formfield">
+            <img [src]="imagepre" [alt]="todolist.value.title">
+        </div>
         <mat-form-field class="formfield">
             <input matInput placeholder="Enter the comment" formControlName="comment">
         </mat-form-field>
-        <button type="submit" mat-button>{{mode}}</button>
+        <div class="formfield">
+            <button type="submit" mat-button>{{mode}}</button>
+        </div>
 </form>
 

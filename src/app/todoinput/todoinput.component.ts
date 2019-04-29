@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { List } from '../list.modle';
 
 
+
 @Component({
   selector: 'app-todoinput',
   templateUrl: './todoinput.component.html',
@@ -12,8 +13,9 @@ import { List } from '../list.modle';
 })
 export class TodoinputComponent implements OnInit {
   todolist :FormGroup;
-  private mode = 'Create'
-  private postId:string
+  private mode = 'Create';
+  private postId:string;
+  imagepre:string;
 
 
   constructor(private dataservice : DataService,private route:ActivatedRoute) { }
@@ -21,7 +23,8 @@ export class TodoinputComponent implements OnInit {
   ngOnInit() {
     this.todolist = new FormGroup({
       'title':new FormControl(null),
-      'comment':new FormControl()
+      'comment':new FormControl(),
+      'image':new FormControl(null)
     })
     this.route.paramMap.subscribe((paramMap :ParamMap)=>{
       if(paramMap.has('id')){
@@ -29,18 +32,11 @@ export class TodoinputComponent implements OnInit {
         this.postId=paramMap.get('id');
         this.dataservice.getPostForEdit(this.postId).subscribe(postdata=>{
           const list :List = {id:postdata._id,title:postdata.title,comment:postdata.comment};
-          this.todolist = new FormGroup({
-            'title':new FormControl(list.title),
-            'comment':new FormControl(list.comment)
-          })
+          this.todolist.setValue({'title':list.title,'comment':list.comment, 'image':null});
         });
       }else{
         this.mode="create";
         this.postId=null;
-        this.todolist = new FormGroup({
-          'title':new FormControl(null),
-          'comment':new FormControl()
-        })
       }
     })
   }
@@ -50,7 +46,20 @@ export class TodoinputComponent implements OnInit {
       this.todolist.reset();
     }else{
       this.dataservice.updatePost(this.postId,this.todolist.value.title,this.todolist.value.comment);
+      this.todolist.reset();
     } 
     
+  }
+  imagePicked(event:Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.todolist.patchValue({image:file});
+    this.todolist.get('image').updateValueAndValidity();
+    console.log(file);
+    console.log(this.todolist);
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      this.imagepre = (reader.result as string);
+    };
+    reader.readAsDataURL(file);
   }
 }
