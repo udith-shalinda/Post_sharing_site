@@ -2,12 +2,13 @@ const express = require('express');
 const List = require('./modles/list');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 //ODjmkgYPiqNhMgTk
 
-mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/node-angular?retryWrites=true",{useNewUrlParser:true})
+mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/node-angular?retryWrites=true" ,{useNewUrlParser:true})
 .then(()=>{
     console.log("Database connected successfully");
 })
@@ -17,6 +18,7 @@ mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/n
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
+app.use('/image',express.static(path.join("backend/image")));
 
 app.use((req,res,next)=>{
     res.setHeader("Access-control-Allow-Origin","*");
@@ -25,19 +27,48 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.post('/home',(req,res,next)=>{
-    const list = new List({
-        title:req.body.title,
-        comment:req.body.comment
 
-    });
+const MIME_TYPE_MAP = {
+    'image/png' : 'png',
+    'image/jpeg' : 'jpg',
+    'image/jpg' : 'jpg'
+}; 
+
+const storage =multer.diskStorage({
+    destination:(req,file,cb)=>{
+        const isValid = MIME_TYPE_MAP[file.mimetype];
+        let error = new Error("Invalid mine type");
+        if(isValid){
+            error = null;
+        }
+        cb(error,"backend/image");
+    },
+    filename:(req,file,cb)=>{
+        const name = file.originalname.toLowerCase().split(' ').join('-');
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        cb(null,name + '-' + Date.now() + '.'+ext);
+    }
+});
+
+
+
+app.post('/home', multer({storage:storage}).single("image") ,(req,res,next)=>{
+    const url = req.protocol + "://"+req.get('host');
+    const list = new List({
+        title:req.body.title, 
+        comment:req.body.comment,
+         imagePath: url + "/image/" + req.file.filename
+        });
     // const list = req.body;
     // console.log(list);
     list.save()
     .then(result=>{
         res.status(201).json({
             message:'element added successfully',
-            postId :result._id
+            list:{
+                ...result,
+                id:result._id
+            }
         });
     });
 });
@@ -47,7 +78,8 @@ app.put('/home/:id',(req,res,next)=>{
     const post = new List({
         _id: req.body.id,
         title:req.body.title,
-        comment: req.body.comment
+        comment: req.body.comment,
+        imagePath:req.body.imagePath
     });
     List.updateOne({ _id : req.params.id},post).then(result=>{
         console.log(result);
@@ -85,5 +117,7 @@ app.delete('/home/:id',(req,res,next)=>{
         res.status(200).json({massage:'Post deleted'});
     });
 });
+
+
 
 module.exports = app;

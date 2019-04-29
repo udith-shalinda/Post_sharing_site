@@ -1,5 +1,6 @@
 import { AbstractControl } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
+import { ReadVarExpr } from '@angular/compiler';
 
 
 export const mimeType = (
@@ -10,7 +11,7 @@ export const mimeType = (
   const frObs = Observable.create(
     (observer: Observer<{ [key: string]: any }>) => {
       fileReader.addEventListener("loadend", () => {
-        const arr = new Uint8Array(fileReader.result).subarray(0, 4);
+          const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
         let header = "";
         let isValid = false;
         for (let i = 0; i < arr.length; i++) {

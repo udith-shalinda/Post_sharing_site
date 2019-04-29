@@ -12,7 +12,7 @@
             <button mat-stroked-button class="formfield" (click)="filePicker.click()" type="button">Add Image</button>
             <input type="file" #filePicker id="filePickerId" (change)="imagePicked($event)">
         </div>
-        <div id="imagePreview" *ngIf="imagepre !== '' && imagepre " class="formfield">
+        <div id="imagePreview" *ngIf="imagepre !== '' && imagepre && todolist.get('image').valid" class="formfield">
             <img [src]="imagepre" [alt]="todolist.value.title">
         </div>
         <mat-form-field class="formfield">

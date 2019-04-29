@@ -15,7 +15,7 @@ export class TodoinputComponent implements OnInit {
   todolist :FormGroup;
   private mode = 'Create';
   private postId:string;
-  imagepre:string ;
+  imagepre:any ;
 
 
   constructor(private dataservice : DataService,private route:ActivatedRoute) { }
@@ -24,14 +24,14 @@ export class TodoinputComponent implements OnInit {
     this.todolist = new FormGroup({
       'title':new FormControl(null),
       'comment':new FormControl(),
-      'image':new FormControl(null,{asyncValidators:[mimeType]})
+      'image':new FormControl(null,{validators:[Validators.required], asyncValidators:[mimeType]})
     })
     this.route.paramMap.subscribe((paramMap :ParamMap)=>{
       if(paramMap.has('id')){
         this.mode= 'Edit',
         this.postId=paramMap.get('id');
         this.dataservice.getPostForEdit(this.postId).subscribe(postdata=>{
-          const list :List = {id:postdata._id,title:postdata.title,comment:postdata.comment};
+          const list :List = {id:postdata._id,title:postdata.title,comment:postdata.comment,imagePath:postdata.imagePath};
           this.todolist.setValue({'title':list.title,'comment':list.comment, 'image':null});
         });
       }else{
@@ -42,7 +42,7 @@ export class TodoinputComponent implements OnInit {
   }
   buttonClicked(){ 
     if(this.mode === 'create'){
-      this.dataservice.pushdata(this.todolist.value.title,this.todolist.value.comment);
+      this.dataservice.pushdata(this.todolist.value.title,this.todolist.value.comment,this.todolist.value.image);
       this.todolist.reset();
     }else{
       this.dataservice.updatePost(this.postId,this.todolist.value.title,this.todolist.value.comment);

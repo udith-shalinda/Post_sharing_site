@@ -8,7 +8,6 @@ import {map} from 'rxjs/operators';
 @Injectable({providedIn:'root'})
 export class DataService{
     private list:List[]=[];
-    private newData:List;
     private listUpdated=new Subject<List[]>();
 
     constructor( private http:HttpClient){}
@@ -20,7 +19,8 @@ export class DataService{
                 return {
                     title:post.title,
                     comment:post.comment,
-                    id:post._id
+                    id:post._id,
+                    imagePath:post.imagePath
                 };
             });
          }))
@@ -36,16 +36,25 @@ export class DataService{
     }
 
     getPostForEdit(id:string){
-        return this.http.get<{_id:string,title:string,comment:string}>('http://localhost:3000/home/'+id);
+        return this.http.get<{_id:string,title:string,comment:string,imagePath:string}>('http://localhost:3000/home/'+id);
 
     }
 
-    pushdata(title:string,comment:string){
-        this.newData={id:null,title:title,comment:comment};
-        this.http.post<{message:string,postId:string}>('http://localhost:3000/home',this.newData)
+    pushdata(title:string,comment:string, image:File){
+        const newData = new FormData();
+        newData.append("title", title);
+        newData.append("comment",comment);
+        newData.append("image",image,title);
+
+        this.http.post<{message:string,list:List}>('http://localhost:3000/home',newData)
         .subscribe((responseData)=>{
-            this.newData.id=responseData.postId;
-            this.list.push(this.newData);
+            const newData={
+                id:responseData.list.id,
+                title:title,
+                comment:comment,
+                imagePath:responseData.list.imagePath
+            };
+            this.list.push(newData);
             this.listUpdated.next([...this.list]);
         });
     }
@@ -62,7 +71,7 @@ export class DataService{
     }
 
     updatePost(id:string,title:string,comment:string){
-        const post :List ={id:id,title:title,comment:comment};
+        const post :List ={id:id,title:title,comment:comment,imagePath:null};
         this.http.put('http://localhost:3000/home/'+id, post)
         .subscribe(response=>{
             console.log("Post updated!!!");
