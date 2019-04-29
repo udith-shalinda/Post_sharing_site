@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from './data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { List } from '../list.modle';
-
+import { mimeType } from './mime-type.validator';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class TodoinputComponent implements OnInit {
   todolist :FormGroup;
   private mode = 'Create';
   private postId:string;
-  imagepre:string;
+  imagepre:string ;
 
 
   constructor(private dataservice : DataService,private route:ActivatedRoute) { }
@@ -24,7 +24,7 @@ export class TodoinputComponent implements OnInit {
     this.todolist = new FormGroup({
       'title':new FormControl(null),
       'comment':new FormControl(),
-      'image':new FormControl(null)
+      'image':new FormControl(null,{asyncValidators:[mimeType]})
     })
     this.route.paramMap.subscribe((paramMap :ParamMap)=>{
       if(paramMap.has('id')){
@@ -58,7 +58,7 @@ export class TodoinputComponent implements OnInit {
     console.log(this.todolist);
     const reader = new FileReader();
     reader.onload = ()=>{
-      this.imagepre = (reader.result as string);
+       this.imagepre = reader.result;
     };
     reader.readAsDataURL(file);
   }

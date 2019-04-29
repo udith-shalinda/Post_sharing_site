@@ -9,10 +9,10 @@
             <input matInput placeholder="Enter the title" formControlName="title">
         </mat-form-field>
         <div>
-            <button mat-stroked-button class="formfield" (click)="filePicker.click()">Add Image</button>
+            <button mat-stroked-button class="formfield" (click)="filePicker.click()" type="button">Add Image</button>
             <input type="file" #filePicker id="filePickerId" (change)="imagePicked($event)">
         </div>
-        <div id="imagePreview" *ngIf="imagepre !== '' && imagepre" class="formfield">
+        <div id="imagePreview" *ngIf="imagepre !== '' && imagepre " class="formfield">
             <img [src]="imagepre" [alt]="todolist.value.title">
         </div>
         <mat-form-field class="formfield">
