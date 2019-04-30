@@ -95,12 +95,24 @@ app.put('/home/:id',multer({storage:storage}).single("imagePath"),(req,res,next)
 
 
 app.get('/home',(req,res,next)=>{
-    List.find()
-    .then((document)=>{
-        //console.log(document);
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.page;
+    const postQuery = List.find();
+    let fetchedPost;
+        if(pageSize && currentPage){
+            postQuery.skip(pageSize * (currentPage -1))
+            .limit(pageSize);
+        }
+
+    
+    postQuery.then((document)=>{
+        fetchedPost = document;
+        return List.count();
+    }).then(count=>{
         res.status(200).json({
             message:'The list is fetched',
-            List:document
+            List:fetchedPost,
+            maxPost:count
         });
     });
 });

@@ -70,13 +70,9 @@ export class TodoinputComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     this.todolist.patchValue({ image: file });
     this.todolist.get("image").updateValueAndValidity();
-    console.log(file);
-    console.log(this.todolist);
     const reader: FileReader = new FileReader();
     reader.onload = (e: ProgressEvent) => {
-      //  this.imagepre = reader.result;
       const fr: FileReader = <FileReader>e.target;
-      console.log(fr.result);
       this.imagepre = fr.result;
     };
     reader.readAsDataURL(file);

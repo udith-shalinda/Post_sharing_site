@@ -4,30 +4,34 @@ import { Injectable } from '@angular/core';
 import { List } from '../list.modle';
 import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
  
 @Injectable({providedIn:'root'})
 export class DataService{
     private list:List[]=[];
-    private listUpdated=new Subject<List[]>();
+    private listUpdated=new Subject<{list:List[],maxPosts:number}>();
 
-    constructor( private http:HttpClient){}
+    constructor( private http:HttpClient,private router:Router){}
 
-    getdata(){
-         this.http.get<{message:string,List:any}>('http://localhost:3000/home')
+    getdata(postPerPage:number,currentPage: number){
+        const queryParams = `?pageSize=${postPerPage}&page=${currentPage}`;
+         this.http.get<{message:string,List:any,maxPost:number}>('http://localhost:3000/home'+queryParams)
          .pipe(map((postdata)=>{
-            return postdata.List.map(post=>{
+            return {post:postdata.List.map(post=>{
                 return {
                     title:post.title,
                     comment:post.comment,
                     id:post._id,
                     imagePath:post.imagePath
                 };
-            });
+            }),maxpost:postdata.maxPost};
          }))
-         .subscribe((tranformedList)=>{
-             console.log(tranformedList);
-             this.list=tranformedList;
-             this.listUpdated.next([...this.list]);
+         .subscribe((tranformedListData)=>{
+             this.list=tranformedListData.post;
+             this.listUpdated.next({
+                 list:[...this.list],
+                 maxPosts:tranformedListData.maxpost
+                 });
          });
        
     }
@@ -48,26 +52,11 @@ export class DataService{
 
         this.http.post<{message:string,list:List}>('http://localhost:3000/home',newData)
         .subscribe((responseData)=>{
-            const newData={
-                id:responseData.list.id,
-                title:title,
-                comment:comment,
-                imagePath:responseData.list.imagePath
-            };
-            this.list.push(newData);
-            this.listUpdated.next([...this.list]);
+            this.router.navigate(["/"]);
         });
     }
     deleteData(id:string){
-        this.http.delete('http://localhost:3000/home/'+ id)
-        .subscribe(()=>{
-            console.log("Post deleted just now");
-           const restoflist = this.list.filter(post=>  post.id !== id);
-           this.list = restoflist;
-           //pass this copy of the list as observerable;
-           this.listUpdated.next([...this.list]);
-        });
-        
+        return this.http.delete('http://localhost:3000/home/'+ id); 
     }
 
     updatePost(id:string,title:string,comment:string,image:File| string){
@@ -89,6 +78,7 @@ export class DataService{
         this.http.put('http://localhost:3000/home/'+id, post)
         .subscribe(response=>{
             console.log("Post updated!!!");
+            this.router.navigate(["/"]);
         });
     }
 }

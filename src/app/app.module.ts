@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoinputComponent } from './todoinput/todoinput.component';
 import { ListComponent } from './list/list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule, MatPaginatorModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -32,7 +32,8 @@ import { DataService } from './todoinput/data.service';
     MatButtonModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatPaginatorModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
