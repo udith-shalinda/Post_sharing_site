@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const multer = require("multer");
 const path = require("path");
 
+const postRoutes = require("./routing/post");
+const userRoutes = require("./routing/user");
+
 const app = express();
 //ODjmkgYPiqNhMgTk
 
@@ -28,113 +31,11 @@ app.use((req,res,next)=>{
 });
 
 
-const MIME_TYPE_MAP = {
-    'image/png' : 'png',
-    'image/jpeg' : 'jpg',
-    'image/jpg' : 'jpg'
-}; 
-
-const storage =multer.diskStorage({
-    destination:(req,file,cb)=>{
-        const isValid = MIME_TYPE_MAP[file.mimetype];
-        let error = new Error("Invalid mine type");
-        if(isValid){
-            error = null;
-        }
-        cb(error,"backend/image");
-    },
-    filename:(req,file,cb)=>{
-        const name = file.originalname.toLowerCase().split(' ').join('-');
-        const ext = MIME_TYPE_MAP[file.mimetype];
-        cb(null,name + '-' + Date.now() + '.'+ext);
-    }
-});
 
 
 
-app.post('/home', multer({storage:storage}).single("image") ,(req,res,next)=>{
-    const url = req.protocol + "://"+req.get('host');
-    const list = new List({
-        title:req.body.title, 
-        comment:req.body.comment,
-         imagePath: url + "/image/" + req.file.filename
-        });
-    // const list = req.body;
-    // console.log(list);
-    list.save()
-    .then(result=>{
-        res.status(201).json({
-            message:'element added successfully',
-            list:{
-                ...result,
-                id:result._id
-            }
-        });
-    });
-});
-
-
-app.put('/home/:id',multer({storage:storage}).single("imagePath"),(req,res,next)=>{
-    let imagePath    = req.body.imagePath;
-    if(req.file){
-        const url = req.protocol + "://"+req.get('host');
-        imagePath = url + "/image/" + req.file.filename;
-    }
-    const post = new List({
-        _id: req.body.id,
-        title:req.body.title,
-        comment: req.body.comment,
-        imagePath:imagePath
-    });
-    console.log(post);
-    List.updateOne({ _id : req.params.id},post).then(result=>{
-        console.log(result);
-        res.status(200).json({massage:'Updated successfully'});
-    });
-});
-
-
-app.get('/home',(req,res,next)=>{
-    const pageSize = +req.query.pageSize;
-    const currentPage = +req.query.page;
-    const postQuery = List.find();
-    let fetchedPost;
-        if(pageSize && currentPage){
-            postQuery.skip(pageSize * (currentPage -1))
-            .limit(pageSize);
-        }
-
-    
-    postQuery.then((document)=>{
-        fetchedPost = document;
-        return List.count();
-    }).then(count=>{
-        res.status(200).json({
-            message:'The list is fetched',
-            List:fetchedPost,
-            maxPost:count
-        });
-    });
-});
-
-app.get('/home/:id',(req,res,next)=>{
-    List.findById(req.params.id)
-    .then(post=>{
-       if(post){
-            res.status(200).json(post);
-       }else{
-            res.status(404).json({messsage:'post is not found'});
-       }
-    });
-})
-
-app.delete('/home/:id',(req,res,next)=>{
-    console.log(req.params.id);
-    List.deleteOne({_id:req.params.id}).then((result)=>{
-        console.log(result);
-        res.status(200).json({massage:'Post deleted'});
-    });
-});
+app.use("/home",postRoutes);
+app.use("/user",userRoutes);
 
 
 

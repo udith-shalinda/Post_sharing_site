@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { TodoinputComponent } from './todoinput/todoinput.component';
 import { ListComponent } from './list/list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule, MatPaginatorModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule, MatPaginatorModule, MatCardModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './todoinput/data.service';
+import { SignInComponent } from './login/sign-in/sign-in.component';
+import { SignUpComponent } from './login/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoinputComponent,
-    ListComponent
+    ListComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,8 @@ import { DataService } from './todoinput/data.service';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
