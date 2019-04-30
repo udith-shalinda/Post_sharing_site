@@ -11,7 +11,7 @@ const userRoutes = require("./routing/user");
 const app = express();
 //ODjmkgYPiqNhMgTk
 
-mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/node-angular?retryWrites=true" ,{useNewUrlParser:true})
+mongoose.connect("mongodb+srv://max:ODjmkgYPiqNhMgTk@testone-e21ea.mongodb.net/node-angular" ,{useNewUrlParser:true})
 .then(()=>{
     console.log("Database connected successfully");
 })

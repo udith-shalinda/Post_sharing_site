@@ -1,13 +1,13 @@
 <mat-card >
-  <form [formGroup]="SignUpForm" (ngSubmit)="buttonClicked()">
+  <form [formGroup]="SignUpForm" (ngSubmit)="signup()">
     <mat-form-field class="formfield">
-        <input matInput placeholder="Enter the email" formControlName="email">
+        <input matInput placeholder="Enter the email" formControlName="email" >
     </mat-form-field>
     <mat-form-field class="formfield">
-        <input matInput placeholder="Enter the password" formControlName="password">
+        <input matInput placeholder="Enter the password" formControlName="password" type="password">
     </mat-form-field>
     <div class="formfield">
-        <button type="submit" mat-raised-button color="primary">Sign In</button>
+        <button type="submit" mat-raised-button color="primary">Sign Up</button>
     </div>
 </form>
 </mat-card>
