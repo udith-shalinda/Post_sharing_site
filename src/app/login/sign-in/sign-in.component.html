@@ -1,5 +1,5 @@
 <mat-card >
-  <form [formGroup]="SignInForm" (ngSubmit)="buttonClicked()">
+  <form [formGroup]="SignInForm" (ngSubmit)="signIn()">
     <mat-form-field class="formfield">
         <input matInput placeholder="Enter the email" formControlName="email">
     </mat-form-field>
