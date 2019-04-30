@@ -1,23 +1,20 @@
 import { AbstractControl } from "@angular/forms";
-import { Observable, Observer } from "rxjs";
-import { ReadVarExpr } from '@angular/compiler';
+import { Observable, Observer, of } from "rxjs";
+
 
 export const mimeType = (
   control: AbstractControl
 ): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
+  if(typeof(control.value) === 'string' ){
+    return of(null);
+  }
+  
   const file = control.value as File;
   const fileReader = new FileReader();
   const frObs = Observable.create(
     (observer: Observer<{ [key: string]: any }>) => {
-<<<<<<< HEAD
       fileReader.addEventListener("loadend", () => {
           const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
-=======
-      fileReader.addEventListener("loadend", e => {
-        const fr: FileReader = <FileReader>e.target;
-        const a = fr.result as ArrayBuffer;
-        const arr = new Uint8Array(a).subarray(0, 4);
->>>>>>> 4fc8474c011904d2f46938dccfd10a696bd8a542
         let header = "";
         let isValid = false;
         for (let i = 0; i < arr.length; i++) {

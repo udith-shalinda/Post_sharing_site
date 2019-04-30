@@ -70,8 +70,22 @@ export class DataService{
         
     }
 
-    updatePost(id:string,title:string,comment:string){
-        const post :List ={id:id,title:title,comment:comment,imagePath:null};
+    updatePost(id:string,title:string,comment:string,image:File| string){
+        let post:List | FormData;
+        if(typeof image === 'object'){
+            post = new FormData();
+            post.append("id",id);
+            post.append("title",title);
+            post.append("comment",comment);
+            post.append("imagePath",image,title);
+            
+        }else{ 
+            post ={
+                id:id,
+                title:title,
+                comment:comment,
+                imagePath:image};
+        }
         this.http.put('http://localhost:3000/home/'+id, post)
         .subscribe(response=>{
             console.log("Post updated!!!");

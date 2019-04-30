@@ -74,13 +74,19 @@ app.post('/home', multer({storage:storage}).single("image") ,(req,res,next)=>{
 });
 
 
-app.put('/home/:id',(req,res,next)=>{
+app.put('/home/:id',multer({storage:storage}).single("imagePath"),(req,res,next)=>{
+    let imagePath    = req.body.imagePath;
+    if(req.file){
+        const url = req.protocol + "://"+req.get('host');
+        imagePath = url + "/image/" + req.file.filename;
+    }
     const post = new List({
         _id: req.body.id,
         title:req.body.title,
         comment: req.body.comment,
-        imagePath:req.body.imagePath
+        imagePath:imagePath
     });
+    console.log(post);
     List.updateOne({ _id : req.params.id},post).then(result=>{
         console.log(result);
         res.status(200).json({massage:'Updated successfully'});
