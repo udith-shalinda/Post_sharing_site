@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <p routerLink="/">TO DO List</p>
+  <span fxFlex></span>
+  <button mat-button routerLink="/newPost" *ngIf="userIsAuthentication">New Post</button>
+  <button mat-button routerLink="/signUp" *ngIf="!userIsAuthentication">Sign Up</button>
+  <button mat-button routerLink="/signIn" *ngIf="!userIsAuthentication">Login</button>
+  <button mat-button *ngIf="userIsAuthentication">Logout</button>
+</mat-toolbar>

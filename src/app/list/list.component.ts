@@ -3,6 +3,7 @@ import { List } from '../list.modle';
 import { DataService } from '../todoinput/data.service';
 import {  Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-list',
@@ -18,8 +19,14 @@ export class ListComponent implements OnInit {
   postsPerPage = 2;
   postsSizeOptions = [1,2,5,10];
   currentPage = 1;
+  userIsAuthentication :boolean= false;
+  private authStatus:Subscription;
+  isAuthed = false;
   
-  constructor(private dataservice:DataService) { }
+  constructor(
+    private dataservice:DataService,
+    private authservice :AuthService
+    ) { }
 
   ngOnInit() {
     this.dataservice.getdata(this.postsPerPage,this.currentPage);
@@ -29,9 +36,15 @@ export class ListComponent implements OnInit {
       this.totalPosts = listData.maxPosts;
       this.isLoading = false;
     });
+    this.isAuthed = this.authservice.getIsAuthed();
+    
+    this.authStatus = this.authservice.getAuthStatusListner().subscribe(response=>{
+      this.userIsAuthentication = response;
+    });
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();
+    this.authStatus.unsubscribe();
   }
   deletePost(id:string){
     this.dataservice.deleteData(id).subscribe(()=>{
@@ -44,5 +57,7 @@ export class ListComponent implements OnInit {
     this.postsPerPage = pageEvent.pageSize;
     this.dataservice.getdata(this.postsPerPage,this.currentPage);
   }
+
+ 
 
 }

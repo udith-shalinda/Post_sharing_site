@@ -1,13 +1,3 @@
-<mat-toolbar color="primary">
-    <p>TO DO List</p>
-    <span fxFlex></span>
-    <button mat-button routerLink="/signIn">Sign In</button>
-    <button mat-button routerLink="/signUp">Sign Up</button>
-    <button mat-button routerLink="/newPost" *ngIf="!newpostactive" (click)="newpostactive=true">New Post</button>
-    <button mat-button *ngIf="newpostactive" routerLink="/" (click)="newpostactive=false">Posts</button>
-</mat-toolbar>
-
-<!-- <app-todoinput></app-todoinput>
-<app-list></app-list> -->
+<app-header></app-header>
 
 <router-outlet></router-outlet>

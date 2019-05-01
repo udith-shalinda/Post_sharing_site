@@ -4,15 +4,9 @@ import { DataService } from "./data.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { List } from "../list.modle";
 import { mimeType } from "./mime-type.validator";
+import { Subscription } from 'rxjs';
+import { AuthService } from '../login/auth.service';
 
-interface FileReaderEventTarget extends EventTarget {
-  result: string;
-}
-
-interface FileReaderEvent extends Event {
-  target: FileReaderEventTarget;
-  getMessage(): string;
-}
 
 @Component({
   selector: "app-todoinput",
@@ -24,11 +18,14 @@ export class TodoinputComponent implements OnInit {
   private mode = 'Create';
   private postId:string;
   imagepre:any ;
+  
+
 
 
   constructor(
     private dataservice: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authservice: AuthService
   ) {}
 
   ngOnInit() {
@@ -51,6 +48,7 @@ export class TodoinputComponent implements OnInit {
         this.postId = null;
       }
     });
+    
   }
   buttonClicked(){ 
     if(this.mode === 'create'){
@@ -77,4 +75,6 @@ export class TodoinputComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
+
+  
 }

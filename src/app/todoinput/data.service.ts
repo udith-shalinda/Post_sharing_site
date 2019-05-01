@@ -56,6 +56,7 @@ export class DataService{
         });
     }
     deleteData(id:string){
+        // const data :{id:string,token:string}={id:id,token: to}
         return this.http.delete('http://localhost:3000/home/'+ id); 
     }
 

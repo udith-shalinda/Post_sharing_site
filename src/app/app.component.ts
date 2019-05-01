@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'todoList-using-mongodb';
 
-  newpostactive=false;
+  
   
 }

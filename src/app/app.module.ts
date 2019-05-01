@@ -10,10 +10,12 @@ import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './todoinput/data.service';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { AuthInterceptor } from './login/auth-interceptor';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
     TodoinputComponent,
     ListComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
     MatPaginatorModule,
     MatCardModule
   ],
-  providers: [DataService],
+providers: [DataService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
