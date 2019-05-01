@@ -36,11 +36,11 @@ export class ListComponent implements OnInit {
       this.totalPosts = listData.maxPosts;
       this.isLoading = false;
     });
-    this.isAuthed = this.authservice.getIsAuthed();
     
     this.authStatus = this.authservice.getAuthStatusListner().subscribe(response=>{
       this.userIsAuthentication = response;
     });
+    this.isAuthed = this.authservice.getIsAuthed();
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();

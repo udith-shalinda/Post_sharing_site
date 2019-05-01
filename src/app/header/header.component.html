@@ -4,5 +4,5 @@
   <button mat-button routerLink="/newPost" *ngIf="userIsAuthentication">New Post</button>
   <button mat-button routerLink="/signUp" *ngIf="!userIsAuthentication">Sign Up</button>
   <button mat-button routerLink="/signIn" *ngIf="!userIsAuthentication">Login</button>
-  <button mat-button *ngIf="userIsAuthentication">Logout</button>
+  <button mat-button *ngIf="userIsAuthentication" (click)="Logout()">Logout</button>
 </mat-toolbar>

@@ -4,16 +4,19 @@ import { TodoinputComponent } from './todoinput/todoinput.component';
 import { ListComponent } from './list/list.component';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { AuthGuard } from './login/auth-guard';
 
 const routes: Routes = [{
   path:'',
   component:ListComponent
 },{
   path:'newPost',
-  component:TodoinputComponent
+  component:TodoinputComponent,
+  canActivate:[AuthGuard]
 },{
   path:'edit/:id',
-  component:TodoinputComponent
+  component:TodoinputComponent,
+  canActivate:[AuthGuard]
 },{
   path:'signIn',
   component:SignInComponent
@@ -25,6 +28,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[AuthGuard]
 })
 export class AppRoutingModule { }

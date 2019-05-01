@@ -48,4 +48,11 @@ export class AuthService{
             this.router.navigate(["/"]);
         });
     }
+
+    Logout(){
+        this.token = null;
+        this.isAuthed = false;
+        this.authStatusListner.next(false);
+        this.router.navigate(['/signIn']);
+    }
 }
