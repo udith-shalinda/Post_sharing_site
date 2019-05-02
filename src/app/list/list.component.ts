@@ -22,6 +22,7 @@ export class ListComponent implements OnInit {
   userIsAuthentication :boolean= false;
   private authStatus:Subscription;
   isAuthed = false;
+  userId :string;
   
   constructor(
     private dataservice:DataService,
@@ -36,11 +37,14 @@ export class ListComponent implements OnInit {
       this.totalPosts = listData.maxPosts;
       this.isLoading = false;
     });
-    
+    this.isAuthed = this.authservice.getIsAuthed();
+    this.userId = this.authservice.getUserId();
+
     this.authStatus = this.authservice.getAuthStatusListner().subscribe(response=>{
       this.userIsAuthentication = response;
+      this.isAuthed = this.authservice.getIsAuthed();
+      this.userId = this.authservice.getUserId();
     });
-    this.isAuthed = this.authservice.getIsAuthed();
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();

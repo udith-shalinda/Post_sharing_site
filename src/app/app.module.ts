@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoinputComponent } from './todoinput/todoinput.component';
 import { ListComponent } from './list/list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule, MatPaginatorModule, MatCardModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatToolbarModule, MatPaginatorModule, MatCardModule, MatIconModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -41,7 +41,8 @@ import { HeaderComponent } from './header/header.component';
     MatProgressSpinnerModule,
     MatToolbarModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
 providers: [DataService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true} ],
   bootstrap: [AppComponent]

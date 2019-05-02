@@ -36,7 +36,8 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,n
     const list = new List({
         title:req.body.title, 
         comment:req.body.comment,
-         imagePath: url + "/image/" + req.file.filename
+         imagePath: url + "/image/" + req.file.filename,
+         creater: req.userData.userId
         });
 
     // const list = req.body;
@@ -64,12 +65,19 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
         _id: req.body.id,
         title:req.body.title,
         comment: req.body.comment,
-        imagePath:imagePath
+        imagePath:imagePath,
+        creater:req.body.userId
     });
     console.log(post);
-    List.updateOne({ _id : req.params.id},post).then(result=>{
+    List.updateOne({ _id : req.params.id,creater:req.userData.userId},post).then(result=>{
         console.log(result);
-        res.status(200).json({massage:'Updated successfully'});
+        if(result.nModified > 0){
+            res.status(200).json({massage:'Updated successfully'});
+        }else{
+            res.status(401).json({
+                message:"Auth Failed"
+            });
+        }
     });
 });
 
@@ -110,9 +118,15 @@ router.get('/:id',(req,res,next)=>{
 
 router.delete('/:id', checkAuth , (req,res,next)=>{
     console.log(req.params.id);
-    List.deleteOne({_id:req.params.id}).then((result)=>{
+    List.deleteOne({_id:req.params.id,creater:req.userData.userId}).then((result)=>{
         console.log(result);
-        res.status(200).json({massage:'Post deleted'});
+        if(result.n > 0){
+            res.status(200).json({massage:'Delete successfully'});
+        }else{
+            res.status(401).json({
+                message:"Auth Failed"
+            });
+        }
     });
 });
 

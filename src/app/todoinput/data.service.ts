@@ -22,7 +22,8 @@ export class DataService{
                     title:post.title,
                     comment:post.comment,
                     id:post._id,
-                    imagePath:post.imagePath
+                    imagePath:post.imagePath,
+                    creater:post.creater
                 };
             }),maxpost:postdata.maxPost};
          }))
@@ -32,6 +33,7 @@ export class DataService{
                  list:[...this.list],
                  maxPosts:tranformedListData.maxpost
                  });
+                 console.log(tranformedListData);
          });
        
     }
@@ -40,7 +42,7 @@ export class DataService{
     }
 
     getPostForEdit(id:string){
-        return this.http.get<{_id:string,title:string,comment:string,imagePath:string}>('http://localhost:3000/home/'+id);
+        return this.http.get<{_id:string,title:string,comment:string,imagePath:string,creater:string}>('http://localhost:3000/home/'+id);
 
     }
 
@@ -74,7 +76,9 @@ export class DataService{
                 id:id,
                 title:title,
                 comment:comment,
-                imagePath:image};
+                imagePath:image,
+                creater:null
+            };
         }
         this.http.put('http://localhost:3000/home/'+id, post)
         .subscribe(response=>{

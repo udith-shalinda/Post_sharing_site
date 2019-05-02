@@ -9,6 +9,7 @@ export class AuthService{
     private token:string;
     private authStatusListner = new Subject<boolean>();
     private isAuthed = false;
+    private userId :string;
 
     constructor(private http:HttpClient,private router:Router){}
 
@@ -21,6 +22,9 @@ export class AuthService{
     getIsAuthed(){
         return this.isAuthed;
     }
+    getUserId(){
+        return this.userId;
+    }
 
     createUser(email:string,password:string){
         const authdata :AuthData = {
@@ -30,6 +34,9 @@ export class AuthService{
         this.http.post("http://localhost:3000/user/signup",authdata)
         .subscribe(response=>{
             console.log(response);
+            if(response){
+                this.router.navigate(["/"]);
+            }
         })
     }
 
@@ -38,20 +45,23 @@ export class AuthService{
             email:email,
             password:password
         }
-        this.http.post<{ token : string }>("http://localhost:3000/user/login",userdata)
+        this.http.post<{ token : string ,userId:string}>("http://localhost:3000/user/login",userdata)
         .subscribe(response=>{
-            this.token = response.token;
-            if(this.token){
+            
+            if(response.token){
+                this.token = response.token;
                 this.isAuthed = true;
                 this.authStatusListner.next(true);
+                this.userId = response.userId;
+                this.router.navigate(["/"]);
             }
-            this.router.navigate(["/"]);
         });
     }
 
     Logout(){
         this.token = null;
         this.isAuthed = false;
+        this.userId = null;
         this.authStatusListner.next(false);
         this.router.navigate(['/signIn']);
     }

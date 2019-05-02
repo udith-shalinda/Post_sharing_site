@@ -39,7 +39,13 @@ export class TodoinputComponent implements OnInit {
         this.mode= 'Edit',
         this.postId=paramMap.get('id');
         this.dataservice.getPostForEdit(this.postId).subscribe(postdata=>{
-          const list :List = {id:postdata._id,title:postdata.title,comment:postdata.comment,imagePath:postdata.imagePath};
+          const list :List = {
+            id:postdata._id,
+            title:postdata.title,
+            comment:postdata.comment,
+            imagePath:postdata.imagePath,
+            creater:postdata.creater
+          };
           this.todolist.setValue({'title':list.title,'comment':list.comment, 'image':list.imagePath});
           this.imagepre = list.imagePath;
         });

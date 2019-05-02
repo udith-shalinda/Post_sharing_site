@@ -8,7 +8,8 @@ import { AuthGuard } from './login/auth-guard';
 
 const routes: Routes = [{
   path:'',
-  component:ListComponent
+  component:ListComponent,
+  canActivate:[AuthGuard]
 },{
   path:'newPost',
   component:TodoinputComponent,
