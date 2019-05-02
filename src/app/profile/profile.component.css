@@ -1,0 +1,21 @@
+#profileImage{
+    width:200px;
+    height: 200px;
+    border-radius: 20%;
+}
+
+mat-card{
+    margin-top:5%;
+    width:75%;
+    margin-left:12.5%;
+}
+mat-card-content{
+    margin-left:12.5%;
+    margin-top:5%;
+}
+mat-grid-list{
+    width:75%;
+}
+mat-grid-tile{
+    background:gray;
+}

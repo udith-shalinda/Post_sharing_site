@@ -8,3 +8,8 @@ mat-card{
     margin-top:100px;
     margin-left:12.5%;
 }
+.errorMessage{
+    color:red;
+    padding:0 25% 0 25%;
+    margin-top:-2%;
+}

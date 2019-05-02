@@ -1,7 +1,8 @@
 <mat-toolbar color="primary">
-  <button mat-button *ngIf="userIsAuthentication"><mat-icon>home</mat-icon></button>
+  <button mat-button *ngIf="userIsAuthentication" routerLink="/"><mat-icon>home</mat-icon></button>
   <p >TO DO List</p>
   <span fxFlex></span>
+  <button mat-button routerLink="./profile"><mat-icon *ngIf="userIsAuthentication" >perm_identity</mat-icon></button>
   <button mat-button routerLink="/newPost" *ngIf="userIsAuthentication">New Post</button>
   <button mat-button routerLink="/signUp" *ngIf="!userIsAuthentication">Sign Up</button>
   <button mat-button routerLink="/signIn" *ngIf="!userIsAuthentication">Login</button>

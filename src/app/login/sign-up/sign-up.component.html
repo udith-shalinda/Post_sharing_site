@@ -1,13 +1,25 @@
 <mat-card >
     <form [formGroup]="SignUpForm" (ngSubmit)="signup()">
-    <h3 *ngIf="errorMessage">{{errorMessage}}</h3>
-    <mat-form-field class="formfield">
+         <div>
+            <span fxFlex></span>
+            <h1>Sign Up</h1>
+            <span fxFlex></span>
+        </div>
+    <mat-form-field class="formfield" appearance="outline">
+        <mat-label>Enter the Password</mat-label>
         <input matInput placeholder="Enter the email" formControlName="email" >
     </mat-form-field>
-    <mat-form-field class="formfield">
+    <mat-form-field class="formfield" appearance="outline">
+        <mat-label>Enter the Password</mat-label>
         <input matInput placeholder="Enter the password" formControlName="password" type="password">
     </mat-form-field>
+    <div>
+        <span fxFlex></span>
+        <p *ngIf="errorMessage" class="errorMessage">{{errorMessage}}</p>
+        <span fxFlex></span>
+    </div>
     <div class="formfield">
+        <span fxFlex></span>
         <button type="submit" mat-raised-button color="primary">Sign Up</button>
     </div>
 </form>

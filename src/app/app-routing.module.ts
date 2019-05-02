@@ -5,6 +5,7 @@ import { ListComponent } from './list/list.component';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { AuthGuard } from './login/auth-guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path:'',
@@ -24,6 +25,10 @@ const routes: Routes = [{
 },{
   path:'signUp',
   component:SignUpComponent
+},{
+  path:'profile',
+  component:ProfileComponent,
+  canActivate:[AuthGuard]
 }
 ];
 
