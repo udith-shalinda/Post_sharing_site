@@ -10,6 +10,7 @@ export class AuthService{
     private authStatusListner = new Subject<boolean>();
     private isAuthed = false;
     private userId :string;
+    private errormessageListner = new Subject<string>();
 
     constructor(private http:HttpClient,private router:Router){}
 
@@ -25,6 +26,9 @@ export class AuthService{
     getUserId(){
         return this.userId;
     }
+    getErrorMessage(){
+        return this.errormessageListner.asObservable();
+    }
 
     createUser(email:string,password:string){
         const authdata :AuthData = {
@@ -35,6 +39,7 @@ export class AuthService{
         .subscribe(response=>{
            this.router.navigate(["/"]);
         },error=>{
+            this.errormessageListner.next(error.error.message);
             this.authStatusListner.next(false);
         })
     }
@@ -46,7 +51,6 @@ export class AuthService{
         }
         this.http.post<{ token : string ,userId:string}>("http://localhost:3000/user/login",userdata)
         .subscribe(response=>{
-            
             if(response.token){
                 this.token = response.token;
                 this.isAuthed = true;
@@ -55,6 +59,7 @@ export class AuthService{
                 this.router.navigate(["/"]);
             }
         },error=>{
+            this.errormessageListner.next(error.error.message);
             this.authStatusListner.next(false);
         });
     }

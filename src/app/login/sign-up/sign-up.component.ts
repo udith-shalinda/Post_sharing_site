@@ -11,7 +11,9 @@ import { AuthService } from '../auth.service';
 })
 export class SignUpComponent implements OnInit,OnDestroy {
   SignUpForm:FormGroup;
-  private authStatusSub:Subscription
+  private authStatusSub:Subscription;
+  private errorSub:Subscription;
+  private errorMessage:string;
 
   constructor(private authService:AuthService) { }
 
@@ -21,9 +23,12 @@ export class SignUpComponent implements OnInit,OnDestroy {
       'password' : new FormControl(null,{validators:Validators.required})
     });
     this.authStatusSub = this.authService.getAuthStatusListner().subscribe(authstatus=>{
-        if(!authstatus){
-          this.SignUpForm.reset();
-        }
+        
+    });
+    this.errorSub = this.authService.getErrorMessage().subscribe(errorMessage=>{
+      if(errorMessage){
+        this.errorMessage = errorMessage; 
+      }
     });
   }
   signup(){
@@ -31,5 +36,6 @@ export class SignUpComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(){
     this.authStatusSub.unsubscribe();
+    this.errorSub.unsubscribe();
   }
 }

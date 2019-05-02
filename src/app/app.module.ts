@@ -17,7 +17,6 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
 
 import { AuthInterceptor } from './login/auth-interceptor';
-import { ErrorInterseptor } from './error-interseptor';
 
 @NgModule({
   declarations: [
@@ -48,8 +47,7 @@ import { ErrorInterseptor } from './error-interseptor';
   ],
 providers: [
   DataService,
-  {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
-  {provide:HTTP_INTERCEPTORS,useClass:ErrorInterseptor,multi:true}
+  {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
  ],
   bootstrap: [AppComponent]
 })

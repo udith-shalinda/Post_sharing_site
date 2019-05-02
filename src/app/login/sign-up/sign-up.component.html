@@ -1,5 +1,6 @@
 <mat-card >
-  <form [formGroup]="SignUpForm" (ngSubmit)="signup()">
+    <form [formGroup]="SignUpForm" (ngSubmit)="signup()">
+    <h3 *ngIf="errorMessage">{{errorMessage}}</h3>
     <mat-form-field class="formfield">
         <input matInput placeholder="Enter the email" formControlName="email" >
     </mat-form-field>

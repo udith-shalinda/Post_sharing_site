@@ -20,7 +20,7 @@ router.post("/signup",(req,res,next)=>{
             })
         }).catch(err=>{
             res.status(500).json({
-                error:err
+                message:"User email is already taken"
             })
         });
     })
@@ -28,11 +28,14 @@ router.post("/signup",(req,res,next)=>{
 
 router.post("/login",(req,res,next)=>{
     let fetchUser;
+    let errorMessage;
+
     User.findOne({email : req.body.email})
     .then(user=>{
         if(!user){
+            errorMessage = "Email is not correct";
             return res.status(401).json({
-                message : "Auth failed"
+                message : "Email is not correct"
             });
         }
         fetchUser = user;
@@ -40,8 +43,9 @@ router.post("/login",(req,res,next)=>{
     })
     .then(result=>{
         if(!result){
+            errorMessage = "Password is incorrect";
             return res.status(401).json({
-                message : "Auth failed"
+                message : "Password is incorrect"
             });
         }
         const token = jwt.sign(
@@ -56,7 +60,7 @@ router.post("/login",(req,res,next)=>{
         });
     }).catch(err=>{
         return res.status(401).json({
-            message : "Auth failed"
+            message : errorMessage
         });
     });
 })
