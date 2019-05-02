@@ -14,8 +14,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './todoinput/data.service';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
-import { AuthInterceptor } from './login/auth-interceptor';
 import { HeaderComponent } from './header/header.component';
+
+import { AuthInterceptor } from './login/auth-interceptor';
+import { ErrorInterseptor } from './error-interseptor';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,11 @@ import { HeaderComponent } from './header/header.component';
     MatCardModule,
     MatIconModule
   ],
-providers: [DataService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true} ],
+providers: [
+  DataService,
+  {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
+  {provide:HTTP_INTERCEPTORS,useClass:ErrorInterseptor,multi:true}
+ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

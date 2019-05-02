@@ -33,10 +33,9 @@ export class AuthService{
         }
         this.http.post("http://localhost:3000/user/signup",authdata)
         .subscribe(response=>{
-            console.log(response);
-            if(response){
-                this.router.navigate(["/"]);
-            }
+           this.router.navigate(["/"]);
+        },error=>{
+            this.authStatusListner.next(false);
         })
     }
 
@@ -55,6 +54,8 @@ export class AuthService{
                 this.userId = response.userId;
                 this.router.navigate(["/"]);
             }
+        },error=>{
+            this.authStatusListner.next(false);
         });
     }
 
