@@ -1,0 +1,11 @@
+#filePickerId{
+    visibility: hidden;
+}
+#imagePreview{
+    width:200px;
+    height: 200px;
+    border-radius:20%;
+}
+input{
+    width:100%;
+}

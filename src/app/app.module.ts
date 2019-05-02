@@ -26,9 +26,11 @@ import {
   MatPaginatorModule,
   MatCardModule,
   MatIconModule,
-  MatGridListModule
+  MatGridListModule,
+  MatStepperModule
 } from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileupdateComponent } from './profileupdate/profileupdate.component';
 
 
 
@@ -40,7 +42,8 @@ import { ProfileComponent } from './profile/profile.component';
     SignInComponent,
     SignUpComponent,
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileupdateComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { ProfileComponent } from './profile/profile.component';
     MatPaginatorModule,
     MatCardModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatStepperModule
 
   ],
   providers: [

@@ -17,7 +17,7 @@ export class TodoinputComponent implements OnInit {
   todolist :FormGroup;
   private mode = 'Create';
   private postId:string;
-  imagepre:any ;
+  imagepre:any;
   
 
 

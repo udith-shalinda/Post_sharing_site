@@ -1,0 +1,56 @@
+
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+
+    <mat-step [stepControl]="profilePicAndName">
+      <form [formGroup]="profilePicAndName" (ngSubmit)="profilePicAndNameSubmit()">
+        <ng-template matStepLabel>Fill out your name and add a profile picture</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="First name , Last Name" formControlName="name" >
+        </mat-form-field>
+            <div>
+                <button mat-stroked-button class="formfield" (click)="filePicker.click()" type="button">Add Image</button>
+                <input type="file" #filePicker id="filePickerId" (change)="imagePicked($event)" >
+            </div>
+            <div  *ngIf="imagepre !== '' && imagepre && profilePicAndName.get('image').valid" class="formfield">
+                <img  id="imagePreview" [src]="imagepre" [alt]="profilePicAndName.name">
+            </div>
+
+        <div>
+          <button mat-button matStepperNext type="submit">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="AboutGroup">
+      <form [formGroup]="AboutGroup">
+        <ng-template matStepLabel>Fill out your details</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" >
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="University" formControlName="university" >
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Address" formControlName="address" >
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="mobile" formControlName="mobile" >
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button type="submit">Reset</button>
+      </div>
+    </mat-step>
+
+  </mat-vertical-stepper>
+  
