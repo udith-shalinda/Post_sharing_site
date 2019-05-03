@@ -14,10 +14,17 @@ router.post("/signup",(req,res,next)=>{
             password:hash
         });
         user.save().then(result=>{
+            const token = jwt.sign(
+                {email:result.email,
+                userId:result._id },
+                "secret_this_should_be_longer",
+                {expiresIn:"1h"}
+            ); 
             res.status(201).json({
-                message:"Created a new user",
-                result:result
-            })
+                token:token,
+                UserId:result._id
+            });
+            console.log(result._id);
         }).catch(err=>{
             res.status(500).json({
                 message:"User email is already taken"
@@ -63,6 +70,20 @@ router.post("/login",(req,res,next)=>{
             message : errorMessage
         });
     });
-})
+});
+
+
+router.post("/deactivate",(req,res,next)=>{
+    User.deleteOne({_id:req.body.email})
+    .then(result=>{
+        if(result){
+            res.status(200).json({message:'Delete successfully'});
+        }else{
+            res.status(401).json({
+                message:"Auth Failed"
+            });
+        }
+    });
+});
 
 module.exports = router;

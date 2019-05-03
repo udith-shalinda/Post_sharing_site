@@ -2,7 +2,7 @@
   <mat-vertical-stepper [linear]="isLinear" #stepper>
 
     <mat-step [stepControl]="profilePicAndName">
-      <form [formGroup]="profilePicAndName" (ngSubmit)="profilePicAndNameSubmit()">
+      <form [formGroup]="profilePicAndName">
         <ng-template matStepLabel>Fill out your name and add a profile picture</ng-template>
         <mat-form-field>
           <input matInput placeholder="First name , Last Name" formControlName="name" >
@@ -16,7 +16,7 @@
             </div>
 
         <div>
-          <button mat-button matStepperNext type="submit">Next</button>
+          <button mat-button matStepperNext type="button">Next</button>
         </div>
       </form>
     </mat-step>
@@ -24,9 +24,6 @@
     <mat-step [stepControl]="AboutGroup">
       <form [formGroup]="AboutGroup">
         <ng-template matStepLabel>Fill out your details</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email" >
-        </mat-form-field>
         <mat-form-field>
             <input matInput placeholder="University" formControlName="university" >
         </mat-form-field>
@@ -44,11 +41,11 @@
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
+      <ng-template matStepLabel>Submit Details</ng-template>
       You are now done.
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button type="submit">Reset</button>
+        <button mat-button (click)="submitDetails()">Submit</button>
       </div>
     </mat-step>
 

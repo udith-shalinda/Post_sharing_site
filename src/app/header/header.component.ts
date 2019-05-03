@@ -25,5 +25,7 @@ export class HeaderComponent implements OnInit {
   Logout(){
     this.authService.Logout();
   }
-
+  deleteAccout(){
+    this.authService.DeleteAccount();
+  }
 }

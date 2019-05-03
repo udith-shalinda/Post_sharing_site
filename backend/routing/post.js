@@ -130,5 +130,18 @@ router.delete('/:id', checkAuth , (req,res,next)=>{
     });
 });
 
+// router.post("/deactivate",(req,res,next)=>{
+//     User.deleteOne({creater:req.body.userid})
+//     .then(result=>{
+//         if(result.n > 0){
+//             res.status(200).json({massage:'Delete successfully'});
+//         }else{
+//             res.status(401).json({
+//                 message:"Auth Failed"
+//             });
+//         }
+//     });
+// });
+
 
 module.exports = router;

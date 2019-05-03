@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { mimeType } from '../todoinput/mime-type.validator';
+import { mimeType } from '../../todoinput/mime-type.validator';
+import { ProfileService } from '../profile.service';
+import { AuthService } from 'src/app/login/auth.service';
 
 @Component({
   selector: 'app-profileupdate',
@@ -14,7 +16,9 @@ export class ProfileupdateComponent implements OnInit {
   AboutGroup: FormGroup;
   
 
-  constructor() { }
+  constructor(
+      private profileservice:ProfileService,
+      private authservise:AuthService) { }
 
   ngOnInit() {
     this.profilePicAndName = new FormGroup({
@@ -41,7 +45,13 @@ export class ProfileupdateComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  profilePicAndNameSubmit(){
-    console.log("loginde");
+  submitDetails(){
+      this.profileservice.submitUserDetails(
+        this.profilePicAndName.value.name,
+        this.profilePicAndName.value.image,
+        this.AboutGroup.value.address,
+        this.AboutGroup.value.mobile,
+        this.AboutGroup.value.university
+        );
   }
 }

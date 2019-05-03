@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { List } from '../list.modle';
 import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
  
 @Injectable({providedIn:'root'})
 export class DataService{

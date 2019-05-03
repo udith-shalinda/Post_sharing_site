@@ -7,6 +7,7 @@ const path = require("path");
 
 const postRoutes = require("./routing/post");
 const userRoutes = require("./routing/user");
+const profileRouter = require("./routing/profile");
 
 const app = express();
 //ODjmkgYPiqNhMgTk
@@ -36,7 +37,7 @@ app.use((req,res,next)=>{
 
 app.use("/home",postRoutes);
 app.use("/user",userRoutes);
-
+app.use("/profile",profileRouter)
 
 
 module.exports = app;

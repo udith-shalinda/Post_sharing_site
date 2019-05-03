@@ -6,7 +6,7 @@ import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { AuthGuard } from './login/auth-guard';
 import { ProfileComponent } from './profile/profile.component';
-import { ProfileupdateComponent } from './profileupdate/profileupdate.component';
+import { ProfileupdateComponent } from './profile/profileupdate/profileupdate.component';
 
 const routes: Routes = [{
   path:'',

@@ -30,7 +30,8 @@ import {
   MatStepperModule
 } from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
-import { ProfileupdateComponent } from './profileupdate/profileupdate.component';
+import { ProfileupdateComponent } from './profile/profileupdate/profileupdate.component';
+import { ProfileService } from './profile/profile.service';
 
 
 
@@ -68,7 +69,8 @@ import { ProfileupdateComponent } from './profileupdate/profileupdate.component'
   ],
   providers: [
     DataService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

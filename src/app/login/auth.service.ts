@@ -35,9 +35,15 @@ export class AuthService{
             email:email,
             password:password
         }
-        this.http.post("http://localhost:3000/user/signup",authdata)
+        this.http.post<{token:string,userId:string}>("http://localhost:3000/user/signup",authdata)
         .subscribe(response=>{
-           this.router.navigate(["/"]);
+            if(response.token){
+                this.token = response.token;
+                this.isAuthed = true;
+                this.authStatusListner.next(true);
+                this.userId = response.userId;
+                this.router.navigate(["/profileUpdate"]);
+            }
         },error=>{
             this.errormessageListner.next(error.error.message);
             this.authStatusListner.next(false);
@@ -70,5 +76,22 @@ export class AuthService{
         this.userId = null;
         this.authStatusListner.next(false);
         this.router.navigate(['/signIn']);
+    }
+
+    DeleteAccount(){
+        const userdata :AuthData ={
+            email:this.userId,
+            password:this.userId
+        }
+        this.http.post<{message:string}>("http://localhost:3000/user/deactivate/",userdata)
+        .subscribe(result=>{
+            if(result){
+                this.token = null;
+                this.isAuthed = false;
+                this.userId = null;
+                this.authStatusListner.next(false);
+                this.router.navigate(['/signIn']);
+            }
+        })
     }
 }
