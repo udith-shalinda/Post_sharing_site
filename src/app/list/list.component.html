@@ -6,7 +6,9 @@
     </div>
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-accordion *ngIf="!isLoading">
+
+
+  <!-- <mat-accordion *ngIf="!isLoading">
       <mat-expansion-panel *ngFor="let data of listItem">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -23,9 +25,32 @@
  
             </mat-action-row>
       </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
+    
+    <div *ngIf="!isLoading">
+      <mat-card class="example-card" *ngFor="let data of listItem">
+        <mat-card-header>
+          <img mat-card-avatar [src]="data.profileImage" alt="">
+          <mat-card-title>{{data.username}}</mat-card-title>
+          <mat-card-subtitle>{{data.title}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="data.imagePath" [alt]="data.title">
+        <mat-card-content>
+          <p>
+            {{data.comment}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions *ngIf="isAuthed && userId === data.creater">
+          <button mat-button color="primary" [routerLink]="['/edit',data.id]">Edit</button>
+          <button mat-button color="warn" (click)="deletePost(data.id)" >Delete</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+
     <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" 
         [pageSizeOptions]="postsSizeOptions" (page)="OnChangePage($event)"
-        *ngIf="listItem.length > 0"></mat-paginator>
+        *ngIf="listItem.length > 0"></mat-paginator>      
     <p *ngIf="listItem.length==0 && !isLoading">No post yet</p>
 </div>

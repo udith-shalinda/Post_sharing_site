@@ -28,7 +28,9 @@ export class DataService{
                     comment:post.comment,
                     id:post._id,
                     imagePath:post.imagePath,
-                    creater:post.creater
+                    creater:post.creater,
+                    username:post.username,
+                    profileImage:post.profileImage
                 };
             }),maxpost:postdata.maxPost};
          }))
