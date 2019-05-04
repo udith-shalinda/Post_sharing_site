@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProfileData } from './profile-module';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn:'root'})
 export class ProfileService{
     private profileDetails :ProfileData;
     private profileDetailsListner = new Subject<{profileDetails:ProfileData}>();
-
-    constructor(private http:HttpClient){}
+    
+    constructor(
+        private http:HttpClient,
+        private router:Router
+        ){}
 
     passProfileDetails(){
         return this.profileDetailsListner.asObservable();
     }
+    
+
     submitUserDetails(name:string,image:File,address:string,mobile:string,university:string){
         const newData = new FormData();
         newData.append("name", name);
@@ -42,7 +48,7 @@ export class ProfileService{
             this.profileDetailsListner.next({
                 profileDetails:this.profileDetails
             });
-            console.log(this.profileDetails.image);
+            
         });
         
     }
@@ -71,7 +77,7 @@ export class ProfileService{
         }
         this.http.put("http://localhost:3000/profile/update",newData)
         .subscribe(result=>{
-            console.log(result);
+            this.router.navigate(['/profile']);
         });
     }
     

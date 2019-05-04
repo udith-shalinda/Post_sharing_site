@@ -34,6 +34,8 @@ const storage =multer.diskStorage({
 router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,next)=>{
     const url = req.protocol + "://"+req.get('host');
     const list = new List({
+        username:req.body.username,
+        profileImage:req.body.profileImage,
         title:req.body.title, 
         comment:req.body.comment,
          imagePath: url + "/image/" + req.file.filename,
@@ -63,6 +65,8 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
     }
     const post = new List({
         _id: req.body.id,
+        profileImage:req.body.profileImage,
+        username:req.body.username,
         title:req.body.title,
         comment: req.body.comment,
         imagePath:imagePath,

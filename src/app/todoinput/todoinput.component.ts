@@ -6,6 +6,8 @@ import { List } from "../list.modle";
 import { mimeType } from "./mime-type.validator";
 import { Subscription } from 'rxjs';
 import { AuthService } from '../login/auth.service';
+import { ProfileService } from '../profile/profile.service';
+import { ProfileData } from '../profile/profile-module';
 
 
 @Component({
@@ -18,14 +20,25 @@ export class TodoinputComponent implements OnInit {
   private mode = 'Create';
   private postId:string;
   imagepre:any;
-  
+  private profileDetailsSub:Subscription;
+  private profileDetails:ProfileData={
+    id:"",
+    name:"",
+    address:"",
+    email:"",
+    mobile:'',
+    university:"",
+    creater:"" ,
+    image:""
+};
 
 
 
   constructor(
     private dataservice: DataService,
     private route: ActivatedRoute,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private profileservice:ProfileService
   ) {}
 
   ngOnInit() {
@@ -34,6 +47,14 @@ export class TodoinputComponent implements OnInit {
       'comment':new FormControl(),
       'image':new FormControl(null,{validators:[Validators.required], asyncValidators:[mimeType]})
     })
+
+    this.profileservice.getProfileDetails();
+    this.profileDetailsSub = this.profileservice.passProfileDetails()
+    .subscribe(result=>{
+        this.profileDetails=result.profileDetails;
+    });
+
+
     this.route.paramMap.subscribe((paramMap :ParamMap)=>{
       if(paramMap.has('id')){
         this.mode= 'Edit',
@@ -41,6 +62,8 @@ export class TodoinputComponent implements OnInit {
         this.dataservice.getPostForEdit(this.postId).subscribe(postdata=>{
           const list :List = {
             id:postdata._id,
+            username:null,
+            profileImage:null,
             title:postdata.title,
             comment:postdata.comment,
             imagePath:postdata.imagePath,
@@ -58,10 +81,12 @@ export class TodoinputComponent implements OnInit {
   }
   buttonClicked(){ 
     if(this.mode === 'create'){
-      this.dataservice.pushdata(this.todolist.value.title,this.todolist.value.comment,this.todolist.value.image);
+      this.dataservice.pushdata(this.profileDetails.image,this.profileDetails.name,this.todolist.value.title,this.todolist.value.comment,this.todolist.value.image);
       this.todolist.reset();
     } else {
       this.dataservice.updatePost(
+        this.profileDetails.image,
+        this.profileDetails.name,
         this.postId,
         this.todolist.value.title,
         this.todolist.value.comment,
@@ -81,6 +106,9 @@ export class TodoinputComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
+  
+  ngOnDestroy(){
+    this.profileDetailsSub.unsubscribe();
+  }
   
 }
