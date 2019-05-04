@@ -147,5 +147,17 @@ router.delete('/:id', checkAuth , (req,res,next)=>{
 //     });
 // });
 
+router.post("/getMyPosts", checkAuth ,(req,res,next)=>{
+    console.log('sfsfsfs');
+    List.find({creater:req.userData.userId})
+        .then(tranformdata=>{
+            console.log(tranformdata)
+            res.status(201).json({
+                result:tranformdata,
+                message:"got my posts"
+        });
+    });
+});
+
 
 module.exports = router;

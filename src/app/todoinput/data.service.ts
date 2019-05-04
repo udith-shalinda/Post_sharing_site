@@ -11,6 +11,7 @@ import { ProfileService } from '../profile/profile.service';
 export class DataService{
     private list:List[]=[];
     private listUpdated=new Subject<{list:List[],maxPosts:number}>();
+    private profilepostList = new Subject<{list:List[]}>();
 
     constructor( 
         private http:HttpClient,
@@ -50,7 +51,9 @@ export class DataService{
 
     getPostForEdit(id:string){
         return this.http.get<{_id:string,title:string,comment:string,imagePath:string,creater:string}>('http://localhost:3000/home/'+id);
-
+    }
+    getprofilepostlist(){
+        return this.profilepostList.asObservable();
     }
 
     pushdata(profileImage:string,username:string,title:string,comment:string, image:File){
@@ -99,4 +102,39 @@ export class DataService{
             this.router.navigate(["/"]);
         });
     }
+
+    getMyposts(creater:string){
+        const newdata: List={
+            id:null,
+            username:null,
+            profileImage:null,
+            title:null,
+            comment:null,
+            imagePath:null,
+            creater:creater
+        }
+        
+        this.http.post<{result:any[],message:string}>("http://localhost:3000/home/getMyPosts",newdata)
+        .pipe(map((postdata)=>{
+            return {post:postdata.result.map(post=>{
+                return {
+                    title:post.title,
+                    comment:post.comment,
+                    id:post._id,
+                    imagePath:post.imagePath,
+                    creater:post.creater,
+                    username:post.username,
+                    profileImage:post.profileImage
+                };
+            })};
+         }))
+         .subscribe((tranformedListData)=>{
+             this.list=tranformedListData.post;
+             this.profilepostList.next({
+                 list:[...this.list]
+                 });
+                 console.log(tranformedListData);
+         });
+    }
+
 }
