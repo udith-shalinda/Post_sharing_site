@@ -26,7 +26,6 @@ export class ProfileupdateComponent implements OnInit {
       'image':new FormControl(null,{validators:[Validators.required], asyncValidators:[mimeType]})
     });
     this.AboutGroup = new FormGroup({
-      'email': new FormControl(null,{validators:[Validators.required]}),
       'university':new FormControl(null,{validators:[Validators.required]}),
       'address':new FormControl(null,{validators:[Validators.required]}),
       'mobile':new FormControl(null,{validators:[Validators.required]})
@@ -53,5 +52,7 @@ export class ProfileupdateComponent implements OnInit {
         this.AboutGroup.value.mobile,
         this.AboutGroup.value.university
         );
+      
+      this.profileservice.getProfileDetails();
   }
 }

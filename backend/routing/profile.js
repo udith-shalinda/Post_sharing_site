@@ -33,7 +33,7 @@ router.post("/save",checkAuth, multer({storage:storage}).single("image"),(req,re
     const url = req.protocol + "://"+req.get('host');
     const userInfo=new ProfileInfo({
         name:req.body.name,
-        email:req.userData.userId,
+        email:req.userData.email,
         address:req.body.address,
         imagePath: imagePath = url + "/image/" + req.file.filename,
         creater:req.userData.userId,
@@ -45,6 +45,18 @@ router.post("/save",checkAuth, multer({storage:storage}).single("image"),(req,re
         res.status(200).json({
             message:'successfully saved'
         });
+    });
+})
+
+router.get("/getDetails",checkAuth,(req,res,next)=>{
+    ProfileInfo.findOne({creater:req.userData.userId})
+    .then(result=>{
+       if(result){
+           res.status(200).json({
+               message:"Data have been passed",
+               result:result
+           });
+       } 
     });
 })
 

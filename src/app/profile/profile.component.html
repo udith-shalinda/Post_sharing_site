@@ -1,10 +1,11 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 <mat-card>
   <mat-card-header>
     <div fxFlex >
-      <img  id="profileImage" src="https://avatars1.githubusercontent.com/u/37566565?s=460&v=4" alt="profile image">
+      <img  id="profileImage" [src]="profileDetails.image" alt="profile image">
       <div>
           <mat-card-title>
-            Udith Shalinda
+            {{profileDetails.name}}
           </mat-card-title>
       </div>
     </div>
@@ -14,21 +15,21 @@
       </mat-card-title>
       <mat-card-subtitle>
         <mat-icon>email</mat-icon>
-        udithshalinda2@gmail.com
+        {{profileDetails.email}}
       </mat-card-subtitle>
       <mat-card-subtitle>
         <mat-icon>school</mat-icon>
-          University of Kelaniya
+          {{profileDetails.university}}
       </mat-card-subtitle>
       <mat-card-subtitle>
         <mat-icon>
           location_on
         </mat-icon>
-        Negombo,Sri Lanka
+        {{profileDetails.address}}
       </mat-card-subtitle>
       <mat-card-subtitle>
         <mat-icon>phone_iphone</mat-icon>
-        0770000000
+        {{profileDetails.mobile}}
       </mat-card-subtitle>
     </div>
     <span fxFlex></span>
