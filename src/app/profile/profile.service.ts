@@ -30,6 +30,7 @@ export class ProfileService{
         this.http.get<{message:string,result:any}>("http://localhost:3000/profile/getDetails")
         .subscribe(response=>{
              this.profileDetails = {
+                 id:response.result._id,
                 name:response.result.name,
                 address:response.result.address,
                 email:response.result.email,
@@ -45,4 +46,33 @@ export class ProfileService{
         });
         
     }
+    updateUserDetails(id:string,name:string,image:string | File,address:string,mobile:string,university:string){
+        let newData:ProfileData | FormData;
+        if(typeof image === 'object'){
+            newData = new FormData();
+            newData.append("id",id);
+            newData.append("name", name);
+            newData.append("address",address);
+            newData.append("image",image,name);
+            newData.append("mobile",mobile);
+            newData.append("university",university);
+            
+        }else{ 
+            newData ={
+                id:id,
+                name:name,
+                image:image,
+                university:university,
+                mobile:mobile,
+                creater:null,
+                address:address,
+                email:null
+            };
+        }
+        this.http.put("http://localhost:3000/profile/update",newData)
+        .subscribe(result=>{
+            console.log(result);
+        });
+    }
+    
 }

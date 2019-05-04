@@ -7,6 +7,7 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { AuthGuard } from './login/auth-guard';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileupdateComponent } from './profile/profileupdate/profileupdate.component';
+import { CanActivate } from '@angular/router/src/utils/preactivation';
 
 const routes: Routes = [{
   path:'',
@@ -32,7 +33,12 @@ const routes: Routes = [{
   canActivate:[AuthGuard]
 },{
   path:'profileUpdate',
-  component:ProfileupdateComponent
+  component:ProfileupdateComponent,
+  canActivate:[AuthGuard]
+},{
+  path:'profileUpdate/:creater',
+  component:ProfileupdateComponent,
+  canActivate:[AuthGuard]
 }
 ];
 

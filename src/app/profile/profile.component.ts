@@ -9,9 +9,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  private profileDetailsSub:Subscription;
   private isLoading=false;
+  private profileDetailsSub:Subscription;
   private profileDetails:ProfileData={
+                id:"",
                 name:"",
                 address:"",
                 email:"",
@@ -33,6 +34,9 @@ export class ProfileComponent implements OnInit {
       this.isLoading = false
     });
     console.log(this.profileDetails.image);
+  }
+  ngOnDestroy(){
+    this.profileDetailsSub.unsubscribe();
   }
   
 

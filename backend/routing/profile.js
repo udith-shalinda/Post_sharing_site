@@ -60,4 +60,34 @@ router.get("/getDetails",checkAuth,(req,res,next)=>{
     });
 })
 
+router.put("/update",checkAuth,multer({storage:storage}).single("image"),(req,res,next)=>{
+    let imagePath    = req.body.image;
+    if(req.file){
+        const url = req.protocol + "://"+req.get('host');
+        imagePath = url + "/image/" + req.file.filename;
+    }
+    const newprofileinfo = new ProfileInfo({
+        _id:req.body.id,
+        name:req.body.name,
+        email:req.userData.email,
+        address:req.body.address,
+        imagePath: imagePath,
+        creater:req.userData.userId,
+        mobile:req.body.mobile,
+        university:req.body.university
+    });
+    ProfileInfo.updateOne({_id:req.body.id},newprofileinfo)
+    .then(result=>{
+        if(result.nModified > 0){
+            res.status(200).json({
+                message:"Successfully profile details Updated!"
+            });
+        }else{
+            res.status(401).json({
+                message:"Update failed"
+            });
+        }
+    });
+});
+
 module.exports = router;
