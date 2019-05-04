@@ -17,7 +17,7 @@ export class ProfileupdateComponent implements OnInit {
   imagepre:any;
   profilePicAndName: FormGroup;
   AboutGroup: FormGroup;
-  mode:string = "Submit";
+  mode:string = "create";
   creater:string;
   private profileDetailsSub:Subscription;
   private profileDetails:ProfileData={
@@ -98,7 +98,6 @@ export class ProfileupdateComponent implements OnInit {
         this.AboutGroup.value.university
         );
     }else{
-      console.log("sfsfsfsf");
       this.profileservice.updateUserDetails(
         this.profileDetails.id,
         this.profilePicAndName.value.name,
@@ -109,7 +108,7 @@ export class ProfileupdateComponent implements OnInit {
       );
     }
   }
-  ngOnDestroy(){
-    this.profileDetailsSub.unsubscribe();
-  }
+  // ngOnDestroy(){
+  //   this.profileDetailsSub.unsubscribe();
+  // }
 }

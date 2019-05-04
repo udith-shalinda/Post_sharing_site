@@ -14,17 +14,18 @@ router.post("/signup",(req,res,next)=>{
             password:hash
         });
         user.save().then(result=>{
-            const token = jwt.sign(
-                {email:result.email,
-                userId:result._id },
-                "secret_this_should_be_longer",
-                {expiresIn:"1h"}
-            ); 
-            res.status(201).json({
-                token:token,
-                UserId:result._id
-            });
-            console.log(result._id);
+            if(result){
+                const token = jwt.sign(
+                    {email:result.email,
+                    userId:result._id },
+                    "secret_this_should_be_longer",
+                    {expiresIn:"1h"}
+                ); 
+                res.status(201).json({
+                    token:token,
+                    UserId:result._id
+                });
+            }
         }).catch(err=>{
             res.status(500).json({
                 message:"User email is already taken"

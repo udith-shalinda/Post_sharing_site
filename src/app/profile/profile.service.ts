@@ -30,6 +30,7 @@ export class ProfileService{
         this.http.post<{message:string}>("http://localhost:3000/profile/save",newData)
         .subscribe(result=>{
             console.log(result.message);
+            this.router.navigate(['/profile']);
         });
     }
     getProfileDetails(){
