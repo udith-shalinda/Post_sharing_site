@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProfileData } from './profile-module';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { DataService } from '../todoinput/data.service';
 
 @Injectable({providedIn:'root'})
 export class ProfileService{
@@ -27,9 +28,9 @@ export class ProfileService{
         newData.append("mobile",mobile);
         newData.append("university",university);
         
-        this.http.post<{message:string}>("http://localhost:3000/profile/save",newData)
+        this.http.post<{message:string,Result:any}>("http://localhost:3000/profile/save",newData)
         .subscribe(result=>{
-            console.log(result.message);
+            console.log(result.Result);
             this.router.navigate(['/profile']);
         });
     }

@@ -56,14 +56,26 @@ export class DataService{
         return this.profilepostList.asObservable();
     }
 
-    pushdata(profileImage:string,username:string,title:string,comment:string, image:File){
-        const newData = new FormData();
-        newData.append("profileImage",profileImage);
-        newData.append("username",username);
-        newData.append("title", title);
-        newData.append("comment",comment);
-        newData.append("image",image,title);
-
+    pushdata(profileImage:string,username:string,title:string,comment:string, image:File | string){
+        let newData : List | FormData;
+        if(typeof image === 'object'){
+            newData = new FormData();
+            newData.append("profileImage",profileImage);
+            newData.append("username",username);
+            newData.append("title", title);
+            newData.append("comment",comment);
+            newData.append("image",image,title);
+        }else{
+            newData ={
+                id:null,
+                username:username,
+                profileImage:profileImage,
+                title:title,
+                comment:comment,
+                imagePath:image,
+                creater:null
+            };
+        }
         this.http.post<{message:string,list:List}>('http://localhost:3000/home',newData)
         .subscribe((responseData)=>{
             this.router.navigate(["/"]);
@@ -133,7 +145,7 @@ export class DataService{
              this.profilepostList.next({
                  list:[...this.list]
                  });
-                 console.log(tranformedListData);
+                 
          });
     }
 

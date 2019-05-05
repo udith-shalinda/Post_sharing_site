@@ -32,13 +32,17 @@ const storage =multer.diskStorage({
 
 
 router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,next)=>{
-    const url = req.protocol + "://"+req.get('host');
+    let imagePath    = req.body.imagePath;
+    if(req.file){
+        const url = req.protocol + "://"+req.get('host');
+        imagePath = url + "/image/" + req.file.filename;
+    }
     const list = new List({
         username:req.body.username,
         profileImage:req.body.profileImage,
         title:req.body.title, 
         comment:req.body.comment,
-         imagePath: url + "/image/" + req.file.filename,
+         imagePath: imagePath,
          creater: req.userData.userId
         });
 
@@ -148,7 +152,6 @@ router.delete('/:id', checkAuth , (req,res,next)=>{
 // });
 
 router.post("/getMyPosts", checkAuth ,(req,res,next)=>{
-    console.log('sfsfsfs');
     List.find({creater:req.userData.userId})
         .then(tranformdata=>{
             console.log(tranformdata)

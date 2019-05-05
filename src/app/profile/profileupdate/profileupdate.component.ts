@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/login/auth.service';
 import {  ActivatedRoute, ParamMap } from '@angular/router';
 import { ProfileData } from '../profile-module';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/todoinput/data.service';
 
 @Component({
   selector: 'app-profileupdate',
@@ -35,7 +36,8 @@ export class ProfileupdateComponent implements OnInit {
   constructor(
       private profileservice:ProfileService,
       private authservise:AuthService,
-      private route:ActivatedRoute
+      private route:ActivatedRoute,
+      private dataservice:DataService
       ) { }
 
   ngOnInit() {
@@ -107,8 +109,22 @@ export class ProfileupdateComponent implements OnInit {
         this.AboutGroup.value.university
       );
     }
+      //get values againg spacially imagepath
+      this.profileservice.getProfileDetails();
+        this.profileDetailsSub = this.profileservice.passProfileDetails()
+        .subscribe(result=>{
+          this.profileDetails = result.profileDetails;
+        });
+        //save data as a post
+        this.dataservice.pushdata(
+          this.profileDetails.image,
+          this.profileDetails.name,
+          "Profile picture changed",
+          " ",
+          this.profilePicAndName.value.image,
+          );
   }
-  // ngOnDestroy(){
-  //   this.profileDetailsSub.unsubscribe();
-  // }
+  ngOnDestroy(){
+    this.profileDetailsSub.unsubscribe();
+  }
 }

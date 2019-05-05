@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit {
       this.profilePostList = result.list;
       this.isLoading = false
     });
+    
   }
 
 

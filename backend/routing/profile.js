@@ -43,7 +43,8 @@ router.post("/save",checkAuth, multer({storage:storage}).single("image"),(req,re
     userInfo.save()
     .then(result=>{
         res.status(200).json({
-            message:'successfully saved'
+            message:'successfully saved',
+            result:result
         });
     });
 })

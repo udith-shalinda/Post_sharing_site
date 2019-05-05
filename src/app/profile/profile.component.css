@@ -19,3 +19,7 @@ mat-grid-list{
 mat-grid-tile{
     background:gray;
 }
+#allImages{
+    width:100%;
+    height:100%;
+}
