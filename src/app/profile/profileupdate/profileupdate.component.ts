@@ -55,7 +55,7 @@ export class ProfileupdateComponent implements OnInit {
       if(paramMap.has('creater')){
         this.mode= 'Edit',
         this.creater=paramMap.get('id');
-        this.profileservice.getProfileDetails();
+        this.profileservice.getMyProfileDetails();
         this.profileDetailsSub = this.profileservice.passProfileDetails()
         .subscribe(result=>{
           this.profileDetails = result.profileDetails
@@ -110,7 +110,7 @@ export class ProfileupdateComponent implements OnInit {
       );
     }
       //get values againg spacially imagepath
-      this.profileservice.getProfileDetails();
+      this.profileservice.getMyProfileDetails();
         this.profileDetailsSub = this.profileservice.passProfileDetails()
         .subscribe(result=>{
           this.profileDetails = result.profileDetails;

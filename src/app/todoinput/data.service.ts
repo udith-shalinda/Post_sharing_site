@@ -115,7 +115,7 @@ export class DataService{
         });
     }
 
-    getMyposts(creater:string){
+    getMyposts(){
         const newdata: List={
             id:null,
             username:null,
@@ -123,7 +123,7 @@ export class DataService{
             title:null,
             comment:null,
             imagePath:null,
-            creater:creater
+            creater:null,
         }
         
         this.http.post<{result:any[],message:string}>("http://localhost:3000/home/getMyPosts",newdata)
@@ -148,5 +148,41 @@ export class DataService{
                  
          });
     }
+
+    getSomeOneElseposts(creater :string){
+        const newdata: List={
+            id:null,
+            username:null,
+            profileImage:null,
+            title:null,
+            comment:null,
+            imagePath:null,
+            creater:null,
+        }
+        
+        this.http.post<{result:any[],message:string}>("http://localhost:3000/home/getSomeOneElsePost/"+creater,newdata)
+        .pipe(map((postdata)=>{
+            return {post:postdata.result.map(post=>{
+                return {
+                    title:post.title,
+                    comment:post.comment,
+                    id:post._id,
+                    imagePath:post.imagePath,
+                    creater:post.creater,
+                    username:post.username,
+                    profileImage:post.profileImage
+                };
+            })};
+         }))
+         .subscribe((tranformedListData)=>{
+
+             this.list=tranformedListData.post;
+             this.profilepostList.next({
+                 list:[...this.list]
+                 });
+                 
+         });
+    }
+
 
 }

@@ -48,7 +48,7 @@ export class TodoinputComponent implements OnInit {
       'image':new FormControl(null,{validators:[Validators.required], asyncValidators:[mimeType]})
     })
 
-    this.profileservice.getProfileDetails();
+    this.profileservice.getMyProfileDetails();
     this.profileDetailsSub = this.profileservice.passProfileDetails()
     .subscribe(result=>{
         this.profileDetails=result.profileDetails;

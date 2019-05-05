@@ -61,6 +61,18 @@ router.get("/getDetails",checkAuth,(req,res,next)=>{
     });
 })
 
+router.get("/getDetails/:creater",checkAuth,(req,res,next)=>{
+    ProfileInfo.findOne({creater:req.params.creater})
+    .then(result=>{
+       if(result){
+           res.status(200).json({
+               message:"Data have been passed",
+               result:result
+           });
+       } 
+    });
+});
+
 router.put("/update",checkAuth,multer({storage:storage}).single("image"),(req,res,next)=>{
     let imagePath    = req.body.image;
     if(req.file){

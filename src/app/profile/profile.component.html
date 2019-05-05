@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-card>
+<mat-card *ngIf="!isLoading">
   <mat-card-header>
     <div fxFlex >
       <img  id="profileImage" [src]="profileDetails.image" alt="profile image">

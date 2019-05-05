@@ -154,7 +154,16 @@ router.delete('/:id', checkAuth , (req,res,next)=>{
 router.post("/getMyPosts", checkAuth ,(req,res,next)=>{
     List.find({creater:req.userData.userId})
         .then(tranformdata=>{
-            console.log(tranformdata)
+            res.status(201).json({
+                result:tranformdata,
+                message:"got my posts"
+        });
+    });
+});
+
+router.post("/getSomeOneElsePost/:creater", checkAuth ,(req,res,next)=>{
+    List.find({creater:req.params.creater})
+        .then(tranformdata=>{
             res.status(201).json({
                 result:tranformdata,
                 message:"got my posts"

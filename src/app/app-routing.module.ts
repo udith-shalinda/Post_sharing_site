@@ -32,6 +32,10 @@ const routes: Routes = [{
   component:ProfileComponent,
   canActivate:[AuthGuard]
 },{
+  path:'profile/:creater',
+  component:ProfileComponent,
+  canActivate:[AuthGuard]
+},{
   path:'profileUpdate',
   component:ProfileupdateComponent,
   canActivate:[AuthGuard]

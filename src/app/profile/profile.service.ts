@@ -34,7 +34,7 @@ export class ProfileService{
             this.router.navigate(['/profile']);
         });
     }
-    getProfileDetails(){
+    getMyProfileDetails(){
         this.http.get<{message:string,result:any}>("http://localhost:3000/profile/getDetails")
         .subscribe(response=>{
              this.profileDetails = {
@@ -81,6 +81,27 @@ export class ProfileService{
         .subscribe(result=>{
             this.router.navigate(['/profile']);
         });
+    }
+
+    getOtherProfileDetails(creater:string){
+        this.http.get<{message:string,result:any}>("http://localhost:3000/profile/getDetails/"+creater)
+        .subscribe(response=>{
+             this.profileDetails = {
+                 id:response.result._id,
+                name:response.result.name,
+                address:response.result.address,
+                email:response.result.email,
+                mobile:response.result.mobile,
+                university:response.result.university,
+                creater:response.result.creater,
+                image:response.result.imagePath              
+            };
+            this.profileDetailsListner.next({
+                profileDetails:this.profileDetails
+            });
+            
+        });
+        
     }
     
 }
