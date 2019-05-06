@@ -103,5 +103,10 @@ export class ProfileService{
         });
         
     }
-    
+    deactivateAccount(){
+        this.http.delete<{message:string}>("http://localhost:3000/profile/deactivate")
+        .subscribe((result)=>{
+            console.log(result.message);
+        });
+    }
 }

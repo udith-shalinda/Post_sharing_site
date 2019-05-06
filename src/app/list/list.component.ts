@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   listSub:Subscription;
   isLoading = false;
   totalPosts=10;
-  postsPerPage = 2;
+  postsPerPage = 5;
   postsSizeOptions = [1,2,5,10];
   currentPage = 1;
   userIsAuthentication :boolean= false;

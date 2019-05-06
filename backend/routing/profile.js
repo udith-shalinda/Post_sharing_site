@@ -102,5 +102,17 @@ router.put("/update",checkAuth,multer({storage:storage}).single("image"),(req,re
         }
     });
 });
+router.delete("/deactivate",checkAuth,(req,res,next)=>{
+    ProfileInfo.deleteOne({creater:req.userData.userId})
+    .then(result=>{
+        if(result){
+            res.status(200).json({message:'Delete successfully'});
+        }else{
+            res.status(401).json({
+                message:"Auth Failed"
+            });
+        }
+    });
+});
 
 module.exports = router;

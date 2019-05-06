@@ -138,18 +138,19 @@ router.delete('/:id', checkAuth , (req,res,next)=>{
     });
 });
 
-// router.post("/deactivate",(req,res,next)=>{
-//     User.deleteOne({creater:req.body.userid})
-//     .then(result=>{
-//         if(result.n > 0){
-//             res.status(200).json({massage:'Delete successfully'});
-//         }else{
-//             res.status(401).json({
-//                 message:"Auth Failed"
-//             });
-//         }
-//     });
-// });
+router.delete("/deactivate",checkAuth,(req,res,next)=>{
+    ProfileInfo.deleteMany({creater:req.userData.userId})
+    .then(result=>{
+        if(result){
+            res.status(200).json({message:'Delete successfully'});
+        }else{
+            res.status(401).json({
+                message:"Auth Failed"
+            });
+        }
+    });
+});
+
 
 router.post("/getMyPosts", checkAuth ,(req,res,next)=>{
     List.find({creater:req.userData.userId})

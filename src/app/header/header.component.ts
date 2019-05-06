@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../login/auth.service';
+import { DataService } from '../todoinput/data.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,11 @@ export class HeaderComponent implements OnInit {
   userIsAuthentication :boolean= false;
   private authStatus:Subscription;
 
-  constructor(private authService : AuthService) { }
+  constructor(
+    private authService : AuthService,
+    private dataservice : DataService,
+    private profileservice : ProfileService
+    ) { }
 
   ngOnInit() {
     this.authStatus = this.authService.getAuthStatusListner().subscribe(response=>{
@@ -27,5 +33,8 @@ export class HeaderComponent implements OnInit {
   }
   deleteAccout(){
     this.authService.DeleteAccount();
+    this.profileservice.deactivateAccount();
+    this.dataservice.deactivateAccount();
+    this.authService.Logout();
   }
 }

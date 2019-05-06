@@ -184,5 +184,10 @@ export class DataService{
          });
     }
 
-
+    deactivateAccount(){
+        this.http.delete<{message:string}>("http://localhost:3000/home/deactivate")
+        .subscribe((result)=>{
+            console.log(result.message);
+        });
+    }
 }
