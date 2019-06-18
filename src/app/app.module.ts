@@ -32,6 +32,7 @@ import {
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileupdateComponent } from './profile/profileupdate/profileupdate.component';
 import { ProfileService } from './profile/profile.service';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -44,7 +45,8 @@ import { ProfileService } from './profile/profile.service';
     SignUpComponent,
     HeaderComponent,
     ProfileComponent,
-    ProfileupdateComponent
+    ProfileupdateComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
