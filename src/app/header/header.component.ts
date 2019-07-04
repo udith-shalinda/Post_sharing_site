@@ -40,4 +40,5 @@ export class HeaderComponent implements OnInit {
   testGetDetailsPP(){
     this.dataservice.testGetDetails();
   }
+  
 }

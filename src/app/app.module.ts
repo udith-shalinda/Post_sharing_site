@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoinputComponent } from './todoinput/todoinput.component';
@@ -27,7 +28,8 @@ import {
   MatCardModule,
   MatIconModule,
   MatGridListModule,
-  MatStepperModule
+  MatStepperModule,
+  MatSidenavModule
 } from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileupdateComponent } from './profile/profileupdate/profileupdate.component';
@@ -66,7 +68,8 @@ import { FooterComponent } from './footer/footer.component';
     MatCardModule,
     MatIconModule,
     MatGridListModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSidenavModule
 
   ],
   providers: [

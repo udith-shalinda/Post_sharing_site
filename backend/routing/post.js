@@ -135,7 +135,6 @@ router.get('/getPosts',(req,res,next)=>{
    ]).then((list) => {
     if (list){
         res.status(200).json({result:list,massage:"found list"});
-        console.log(list);   //gives undefined 
     }else{
         res.status(401).json({message:'post is not found'});
     }
