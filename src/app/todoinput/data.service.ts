@@ -6,10 +6,12 @@ import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import {  Router } from '@angular/router';
 import { ProfileService } from '../profile/profile.service';
+import { ProfileData } from '../profile/profile-module';
  
 @Injectable({providedIn:'root'})
 export class DataService{
     private list:List[]=[];
+    private profile:ProfileData[]= [];
     private listUpdated=new Subject<{list:List[],maxPosts:number}>();
     private profilepostList = new Subject<{list:List[]}>();
 
@@ -192,9 +194,29 @@ export class DataService{
     }
 
     testGetDetails(){
-        this.http.get("http://localhost:3000/home/getPosts")
-        .subscribe((result)=>{
-            console.log(result);
-        })
+        this.http.get<{result:any[],message:string}>("http://localhost:3000/home/getPosts")
+        .pipe(map((postdata)=>{
+            return {post:postdata.result.map(post=>{
+                this.profile = post.userInfo;
+                console.log(post.userInfo[0].imagePath) 
+                return {
+                    title:post.title,
+                    comment:post.comment,
+                    id:post._id,
+                    imagePath:post.imagePath,
+                    creater:post.creater,
+                    username:post.username,
+                    profileImage:post.userInfo[0].imagePath
+                };
+            })};
+         }))
+         .subscribe((tranformedListData)=>{
+
+             this.list=tranformedListData.post;
+             this.profilepostList.next({
+                 list:[...this.list]
+                 });
+                 
+         });
     }
 }

@@ -125,13 +125,14 @@ router.get('/getPosts',(req,res,next)=>{
     },
    ]).then((list) => {
     if (list){
-        res.status(200).json(list);
-        console.log(list.userInfo);   //gives undefined 
+        res.status(200).json({result:list,massage:"found list"});
+        console.log(list);   //gives undefined 
     }else{
         res.status(401).json({message:'post is not found'});
     }
    });
 });
+
 
 router.get('/:id',(req,res,next)=>{
     List.findById(req.params.id)
