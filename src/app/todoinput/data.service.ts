@@ -23,7 +23,7 @@ export class DataService{
 
     getdata(postPerPage:number,currentPage: number){
         const queryParams = `?pageSize=${postPerPage}&page=${currentPage}`;
-         this.http.get<{message:string,List:any,maxPost:number}>('http://localhost:3000/home'+queryParams)
+         this.http.get<{message:string,List:any[],maxPost:number}>('http://localhost:3000/home'+queryParams)
          .pipe(map((postdata)=>{
             return {post:postdata.List.map(post=>{
                 return {
@@ -33,7 +33,7 @@ export class DataService{
                     imagePath:post.imagePath,
                     creater:post.creater,
                     username:post.username,
-                    profileImage:post.profileImage
+                    profileImage:post.userInfo[0].imagePath
                 };
             }),maxpost:postdata.maxPost};
          }))

@@ -93,7 +93,16 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
 router.get('/',(req,res,next)=>{
     const pageSize = +req.query.pageSize;
     const currentPage = +req.query.page;
-    const postQuery = List.find();
+    const postQuery = List.aggregate([
+        {
+            "$lookup": {
+                "from": "profileinfos",
+                "localField": "creater",
+                "foreignField": "creater",
+                "as": "userInfo"
+            }
+        },
+       ]);
     let fetchedPost;
         if(pageSize && currentPage){
             postQuery.skip(pageSize * (currentPage -1))
