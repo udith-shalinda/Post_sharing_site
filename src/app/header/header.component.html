@@ -2,6 +2,7 @@
   <button mat-button *ngIf="userIsAuthentication" routerLink="/"><mat-icon>home</mat-icon></button>
   <p >Post sharing app</p>
   <span fxFlex></span>
+  <button mat-button (click)="testGetDetailsPP()">test_button</button>
   <button mat-button routerLink="./profile"><mat-icon *ngIf="userIsAuthentication" >perm_identity</mat-icon></button>
   <button mat-button routerLink="/newPost" *ngIf="userIsAuthentication">New Post</button>
   <button mat-button routerLink="/signUp" *ngIf="!userIsAuthentication">Sign Up</button>

@@ -190,4 +190,11 @@ export class DataService{
             console.log(result.message);
         });
     }
+
+    testGetDetails(){
+        this.http.get("http://localhost:3000/home/getPosts")
+        .subscribe((result)=>{
+            console.log(result);
+        })
+    }
 }

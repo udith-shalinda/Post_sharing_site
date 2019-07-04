@@ -113,6 +113,26 @@ router.get('/',(req,res,next)=>{
     });
 });
 
+router.get('/getPosts',(req,res,next)=>{
+   List.aggregate([
+    {
+        "$lookup": {
+            "from": "profileinfos",
+            "localField": "creater",
+            "foreignField": "creater",
+            "as": "userInfo"
+        }
+    },
+   ]).then((list) => {
+    if (list){
+        res.status(200).json(list);
+        console.log(list.userInfo);   //gives undefined 
+    }else{
+        res.status(401).json({message:'post is not found'});
+    }
+   });
+});
+
 router.get('/:id',(req,res,next)=>{
     List.findById(req.params.id)
     .then(post=>{

@@ -37,4 +37,7 @@ export class HeaderComponent implements OnInit {
     this.dataservice.deactivateAccount();
     this.authService.Logout();
   }
+  testGetDetailsPP(){
+    this.dataservice.testGetDetails();
+  }
 }
