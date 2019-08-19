@@ -35,7 +35,7 @@ router.post("/save",checkAuth, multer({storage:storage}).single("image"),(req,re
         name:req.body.name,
         email:req.userData.email,
         address:req.body.address,
-        imagePath: imagePath = url + "/image/" + req.file.filename,
+        imagePath: url + "/image/" + req.file.filename,
         creater:req.userData.userId,
         mobile:req.body.mobile,
         university:req.body.university

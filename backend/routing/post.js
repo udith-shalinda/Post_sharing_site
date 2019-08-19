@@ -1,6 +1,5 @@
 const express = require('express');
 const multer = require("multer");
-
 const List = require('../modles/list');
 const checkAuth = require("../middleware/check-auth");
 
@@ -57,6 +56,7 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,n
                 id:result._id
             }
         });
+
     });
 });
 
@@ -78,7 +78,7 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
     });
     console.log(post);
     List.updateOne({ _id : req.params.id,creater:req.userData.userId},post).then(result=>{
-        console.log(result);
+        // console.log(result);
         if(result.nModified > 0){
             res.status(200).json({massage:'Updated successfully'});
         }else{
@@ -198,6 +198,14 @@ router.post("/getSomeOneElsePost/:creater", checkAuth ,(req,res,next)=>{
                 result:tranformdata,
                 message:"got my posts"
         });
+    });
+});
+
+router.post("/watchList",(req,res,next)=>{
+    List.watch().on('change', change => {
+        res.status(201).json({
+            messge:"good"
+        })
     });
 });
 

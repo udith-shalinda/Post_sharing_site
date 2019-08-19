@@ -217,4 +217,10 @@ export class DataService{
                  
          });
     }
+    watchDatabase(postPerPage:number,currentPage: number){
+        console.log("ficisfsf");
+        this.http.post("http://localhost:3000/home/watchList","sdfsfs").subscribe(result=>{
+            this.getdata(postPerPage,currentPage);
+        });
+    }
 }

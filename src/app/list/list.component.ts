@@ -45,6 +45,7 @@ export class ListComponent implements OnInit {
       this.isAuthed = this.authservice.getIsAuthed();
       this.userId = this.authservice.getUserId();
     });
+    this.dataservice.watchDatabase(this.postsPerPage,this.currentPage);
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();
