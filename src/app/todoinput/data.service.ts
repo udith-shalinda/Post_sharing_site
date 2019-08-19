@@ -217,10 +217,13 @@ export class DataService{
                  
          });
     }
-    watchDatabase(postPerPage:number,currentPage: number){
-        console.log("ficisfsf");
-        this.http.post("http://localhost:3000/home/watchList","sdfsfs").subscribe(result=>{
-            this.getdata(postPerPage,currentPage);
-        });
-    }
+    // watchDatabase(postPerPage:number,currentPage: number){
+    //     console.log("ficisfsf");
+    //     this.http.post<{message:string}>("http://localhost:3000/home/watchList","sdfsfs").subscribe(result=>{
+    //         if(result.message == "good"){
+    //             this.watchDatabase(postPerPage,currentPage);
+    //         }
+    //         this.getdata(postPerPage,currentPage);
+    //     });
+    // }
 }

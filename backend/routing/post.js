@@ -201,13 +201,20 @@ router.post("/getSomeOneElsePost/:creater", checkAuth ,(req,res,next)=>{
     });
 });
 
-router.post("/watchList",(req,res,next)=>{
-    List.watch().on('change', change => {
-        res.status(201).json({
-            messge:"good"
-        })
-    });
-});
+// router.post("/watchList",(req,res,next)=>{
+//     List.watch().on('change', change => {
+//         if(change !== null){
+//             res.status(201).json({
+//                 message:"good"
+//             });
+//         }else{
+//             res.status(401).json({
+//                 message:"not good"
+//             });
+//         }
+//     });
+    
+// });
 
 
 module.exports = router;

@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    // this.dataservice.watchDatabase(this.postsPerPage,this.currentPage); //changed
     this.dataservice.getdata(this.postsPerPage,this.currentPage);
     this.isLoading = true;
     this.listSub = this.dataservice.getListUpdateListener().subscribe((listData :{list:List[],maxPosts:number})=>{
@@ -45,7 +46,7 @@ export class ListComponent implements OnInit {
       this.isAuthed = this.authservice.getIsAuthed();
       this.userId = this.authservice.getUserId();
     });
-    this.dataservice.watchDatabase(this.postsPerPage,this.currentPage);
+    
   }
   ngOnDestroy(){
     this.listSub.unsubscribe();
