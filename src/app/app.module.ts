@@ -14,8 +14,11 @@ import { DataService } from './todoinput/data.service';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 
 import { AuthInterceptor } from './login/auth-interceptor';
+
 
 import {
   MatInputModule,
@@ -56,6 +59,8 @@ import { FooterComponent } from './footer/footer.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
 
+
+
     MatInputModule,
     MatFormFieldModule,
     FlexLayoutModule,
@@ -69,7 +74,8 @@ import { FooterComponent } from './footer/footer.component';
     MatIconModule,
     MatGridListModule,
     MatStepperModule,
-    MatSidenavModule
+    MatSidenavModule,
+
 
   ],
   providers: [

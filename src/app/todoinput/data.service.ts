@@ -8,6 +8,9 @@ import {  Router } from '@angular/router';
 import { ProfileService } from '../profile/profile.service';
 
 
+
+
+
 @Injectable({providedIn:'root'})
 export class DataService{
     private list:List[]=[];
@@ -17,7 +20,7 @@ export class DataService{
     constructor( 
         private http:HttpClient,
         private router:Router,
-        private profileservice:ProfileService
+        private profileservice:ProfileService,
         ){}
 
     getdata(postPerPage:number,currentPage: number){
@@ -217,13 +220,6 @@ export class DataService{
                  
          });
     }
-    // watchDatabase(postPerPage:number,currentPage: number){
-    //     console.log("ficisfsf");
-    //     this.http.post<{message:string}>("http://localhost:3000/home/watchList","sdfsfs").subscribe(result=>{
-    //         if(result.message == "good"){
-    //             this.watchDatabase(postPerPage,currentPage);
-    //         }
-    //         this.getdata(postPerPage,currentPage);
-    //     });
-    // }
+    
+    
 }

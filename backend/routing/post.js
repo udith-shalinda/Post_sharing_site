@@ -3,6 +3,7 @@ const multer = require("multer");
 const List = require('../modles/list');
 const checkAuth = require("../middleware/check-auth");
 
+
 const router = express.Router();
 
 
@@ -30,7 +31,7 @@ const storage =multer.diskStorage({
 
 
 
-router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,next)=>{
+router.post('/',checkAuth, multer({storage:storage}).single("image") ,async(req,res,next)=>{
     let imagePath    = req.body.imagePath;
     if(req.file){
         const url = req.protocol + "://"+req.get('host');
@@ -49,6 +50,7 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,n
     // console.log(list);
     list.save()
     .then(result=>{
+        // socketIO.emit('updated', {msg: true, list})
         res.status(201).json({
             message:'element added successfully',
             list:{
@@ -58,7 +60,10 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,(req,res,n
         });
 
     });
+
 });
+
+
 
 
 router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,res,next)=>{
@@ -80,6 +85,7 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
     List.updateOne({ _id : req.params.id,creater:req.userData.userId},post).then(result=>{
         // console.log(result);
         if(result.nModified > 0){
+            // socketIO.emit('updated', {msg: true, result})
             res.status(200).json({massage:'Updated successfully'});
         }else{
             res.status(401).json({
