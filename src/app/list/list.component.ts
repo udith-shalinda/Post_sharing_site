@@ -35,6 +35,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.socket.on('update',()=>{
       console.log('updated happened');
+      this.dataservice.getdata(this.postsPerPage,this.currentPage);  
     })
     this.dataservice.getdata(this.postsPerPage,this.currentPage);
     this.isLoading = true;
