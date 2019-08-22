@@ -14,10 +14,12 @@ import { DataService } from './todoinput/data.service';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 
 import { AuthInterceptor } from './login/auth-interceptor';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 
 import {
@@ -58,7 +60,8 @@ import { FooterComponent } from './footer/footer.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-
+    SocketIoModule.forRoot(config),
+   
 
 
     MatInputModule,

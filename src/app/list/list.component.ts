@@ -4,6 +4,8 @@ import { DataService } from '../todoinput/data.service';
 import {  Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
 import { AuthService } from '../login/auth.service';
+import { Socket } from 'ngx-socket-io';
+
 
 @Component({
   selector: 'app-list',
@@ -26,11 +28,14 @@ export class ListComponent implements OnInit {
   
   constructor(
     private dataservice:DataService,
-    private authservice :AuthService
+    private authservice :AuthService,
+    private socket: Socket
     ) { }
 
   ngOnInit() {
-    // this.dataservice.watchDatabase(this.postsPerPage,this.currentPage); //changed
+    this.socket.on('update',()=>{
+      console.log('updated happened');
+    })
     this.dataservice.getdata(this.postsPerPage,this.currentPage);
     this.isLoading = true;
     this.listSub = this.dataservice.getListUpdateListener().subscribe((listData :{list:List[],maxPosts:number})=>{

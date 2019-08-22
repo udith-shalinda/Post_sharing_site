@@ -7,6 +7,7 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 
+
 const MIME_TYPE_MAP = {
     'image/png' : 'png',
     'image/jpeg' : 'jpg', 
@@ -67,6 +68,11 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,async(req,
 
 
 router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,res,next)=>{
+    
+    var io = req.app.get('socketio');
+    console.log("io is ",io);
+    io.emit('update','sfsfsfsfs');
+
     let imagePath    = req.body.imagePath;
     if(req.file){
         const url = req.protocol + "://"+req.get('host');
@@ -85,7 +91,7 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,r
     List.updateOne({ _id : req.params.id,creater:req.userData.userId},post).then(result=>{
         // console.log(result);
         if(result.nModified > 0){
-            // socketIO.emit('updated', {msg: true, result})
+            io.sockets.emit('updated', "sfsfsfsfs");
             res.status(200).json({massage:'Updated successfully'});
         }else{
             res.status(401).json({

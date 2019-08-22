@@ -50,3 +50,10 @@ const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
+
+
+
+// const app = require('express')();
+const io = require('socket.io')(server);
+// next line is the money
+app.set('socketio', io);
