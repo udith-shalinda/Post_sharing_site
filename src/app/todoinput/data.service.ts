@@ -6,8 +6,8 @@ import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import {  Router } from '@angular/router';
 import { ProfileService } from '../profile/profile.service';
-import { Socket } from 'ngx-socket-io';
-import * as io from "socket.io-client";
+// import { Socket } from 'ngx-socket-io';
+
 
 
 
@@ -22,6 +22,7 @@ export class DataService{
         private http:HttpClient,
         private router:Router,
         private profileservice:ProfileService,
+        // private socket : Socket,
         
         ){}
 

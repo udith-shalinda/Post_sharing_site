@@ -70,7 +70,7 @@ router.post('/',checkAuth, multer({storage:storage}).single("image") ,async(req,
 router.put('/:id',checkAuth,multer({storage:storage}).single("imagePath"),(req,res,next)=>{
     
     var io = req.app.get('socketio');
-    console.log("io is ",io);
+    // console.log("io is ",io);
     io.emit('update','sfsfsfsfs');
 
     let imagePath    = req.body.imagePath;
